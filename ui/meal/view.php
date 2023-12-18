@@ -2,7 +2,7 @@
 <?php
 
 $GLOBALS['title']="Meal-HMS";
-$base_url="http://localhost/hms/";
+$base_url="http://localhost:8081/hms/";
 $GLOBALS['output']='';
 $GLOBALS['isData']="";
 require('./../../inc/sessionManager.php');
@@ -27,7 +27,12 @@ else
     if ($msg = "true") {
         $handyCam = new \handyCam\handyCam();
         $data = array();
-        $result = $db->getData("SELECT a.serial,b.name,a.noOfMeal,DATE_FORMAT(a.date, '%D %M,%Y') as mealDate FROM meal as a,studentinfo as b where a.userId=b.userId and b.isActive='Y'");
+        // $result = $db->getData("SELECT serial, userId, photo, title, unitPrice, status, noOfMeal, DATE_FORMAT(date, '%D %M,%Y') as mealDate
+        // FROM meal
+        // WHERE userId IN (SELECT userId FROM studentinfo WHERE isActive='Y');
+        // ");
+
+        $result = $db->getData("SELECT a.serial,b.name,a.noOfMeal, a.photo, a.title, a.unitPrice, a.status,DATE_FORMAT(a.date, '%D %M,%Y') as mealDate FROM meal as a,studentinfo as b where a.userId=b.userId and b.isActive='Y' and a.status != 'Removed'");
         $GLOBALS['output']='';
         if ($result !== false)
         {
@@ -37,9 +42,12 @@ else
                                     <thead>
                                         <tr>
 
+                                        <th>Image</th>
                                             <th>Name</th>
-                                             <th>No Of Meal</th>
-
+                                            <th>Title</th>
+                                            <th>Unit Price</th>
+                                            <th>Status</th>
+                                             <th>Total Ordered</th>
                                              <th>Date</th>
                                               <th>Action</th>
 
@@ -49,8 +57,12 @@ else
                 while ($row = $result->fetch_array()) {
                 $GLOBALS['isData']="1";
                 $GLOBALS['output'] .= "<tr>";
-
+                $GLOBALS['output'] .= "<td> <img src='./../../files/photos/".$row['photo'] ."' alt='Avatar' height='100px' class='img-responsive img-rounded proimg'> </td>";
                 $GLOBALS['output'] .= "<td>" . $row['name'] . "</td>";
+                $GLOBALS['output'] .= "<td>" . $row['title'] . "</td>";
+                $GLOBALS['output'] .= "<td>" . $row['unitPrice'] . "</td>";
+                $GLOBALS['output'] .= "<td>" . $row['status'] . "</td>";
+
                 $GLOBALS['output'] .= "<td>" . $row['noOfMeal'] . "</td>";
 
                 $GLOBALS['output'] .= "<td>" . $row['mealDate'] . "</td>";

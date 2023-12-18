@@ -8,7 +8,7 @@
 
 
 $GLOBALS['title']="Notice-HMS";
-$base_url="http://localhost/hms/";
+$base_url="http://localhost:8081/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');

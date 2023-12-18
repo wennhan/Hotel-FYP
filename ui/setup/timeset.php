@@ -8,7 +8,7 @@
 
 
 $GLOBALS['title']="Time Set-HMS";
-$base_url="http://localhost/hms/";
+$base_url="http://localhost:8081/hms/";
 $GLOBALS['rate']='';
 $GLOBALS['note']="";
 require('./../../inc/sessionManager.php');

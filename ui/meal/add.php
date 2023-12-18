@@ -1,10 +1,11 @@
 <?php
 
 $GLOBALS['title']="Meal-HMS";
-$base_url="http://localhost/hms/";
+$base_url="http://localhost:8081/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
+require('./../../inc/fileUploader.php');
 
 
 $ses = new \sessionManager\sessionManager();
@@ -28,14 +29,24 @@ else
             $msg = $db->open();
 
             if ($msg = "true") {
+                //Follow fileName, If same name file will be replaced (It should use Id for unique instead )
+                $originalFilename = $_FILES['perPhoto']['name'];
+                $pathInfo = pathinfo($originalFilename);
+                $filenameOnly = $pathInfo['filename'];
+                $flup = new fileUploader\fileUploader();
+                $perPhoto = $flup->upload("/hms/files/photos/", $_FILES['perPhoto'], $filenameOnly);
+                
 
 
 
                 $data = array(
                     'userId' => $_POST['person'],
                     'noOfMeal' => floatval($_POST['noOfMeal']),
-                     'date' =>date("Y-m-d")
-
+                    'title' => $_POST['title'],
+                    'photo' => $perPhoto,
+                    'status' => $_POST['status'],
+                    'unitPrice' => $_POST['unitPrice'],
+                    'date' =>date("Y-m-d")
 
 
                 );
@@ -142,6 +153,61 @@ else
                         </div>
 
 
+                        <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-4">
+                                        <div class="form-group ">
+                                            <label>Photo</label>
+                                            <div class="input-group">
+
+                                                <input type="file" class="form-control" name="perPhoto" required>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                        <div class="col-lg-4">
+                                    <div class="form-group ">
+                                        <label>Title</label>
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-info"></i> </span>
+                                            <input type="text" placeholder="Title" class="form-control" name="title" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <select class="form-control" name="status" required="">
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                        <div class="col-lg-4">
+                                    <div class="form-group ">
+                                        <label>Unit Price</label>
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-info"></i> </span>
+                                            <input type="text" placeholder="Unit Price" class="form-control" name="unitPrice" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                     
 
 
 

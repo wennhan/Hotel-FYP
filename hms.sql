@@ -1,91 +1,92 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.2
--- http://www.phpmyadmin.net
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 21, 2015 at 12:49 AM
--- Server version: 5.5.41-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.7
+-- 主机： 127.0.0.1
+-- 生成日期： 2023-12-17 15:37:04
+-- 服务器版本： 10.4.32-MariaDB
+-- PHP 版本： 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `hms`
+-- 数据库： `hms`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attendence`
+-- 表的结构 `attendence`
 --
 
-CREATE TABLE IF NOT EXISTS `attendence` (
+CREATE TABLE `attendence` (
   `serial` int(11) NOT NULL,
   `userId` varchar(10) NOT NULL,
   `date` date NOT NULL,
   `isAbsence` varchar(3) NOT NULL,
   `isLeave` varchar(3) NOT NULL,
   `remark` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `attendence`
+-- 转存表中的数据 `attendence`
 --
 
 INSERT INTO `attendence` (`serial`, `userId`, `date`, `isAbsence`, `isLeave`, `remark`) VALUES
 (13, 'U008', '2015-02-27', 'No', 'No', 'Self'),
-(14, 'U009', '2015-02-27', 'Yes', 'No', 'tte'),
-(15, 'U009', '2015-04-17', 'No', 'No', 'Self'),
-(16, 'U009', '2015-04-18', 'No', 'No', 'Self');
+(16, 'U009', '2015-04-18', 'No', 'No', 'Self'),
+(17, 'U009', '2023-11-27', 'Yes', 'Yes', '123'),
+(18, 'U0012', '2023-12-17', 'No', 'No', 'Self');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auto_id`
+-- 表的结构 `auto_id`
 --
 
-CREATE TABLE IF NOT EXISTS `auto_id` (
+CREATE TABLE `auto_id` (
   `serial` int(11) NOT NULL,
   `prefix` varchar(10) NOT NULL,
   `number` int(11) NOT NULL,
   `description` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `auto_id`
+-- 转存表中的数据 `auto_id`
 --
 
 INSERT INTO `auto_id` (`serial`, `prefix`, `number`, `description`) VALUES
 (1, 'UG', 1, 'User Group Id'),
-(2, 'U', 12, 'User Id'),
-(3, 'EMP', 5, 'Employee Id'),
-(4, 'BL', 6, 'Block Id'),
-(5, 'RM', 7, 'Room Number'),
-(6, 'BIL', 10, 'Billing Id');
+(2, 'U', 14, 'User Id'),
+(3, 'EMP', 7, 'Employee Id'),
+(4, 'BL', 8, 'Block Id'),
+(5, 'RM', 8, 'Room Number'),
+(6, 'BIL', 12, 'Billing Id');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billing`
+-- 表的结构 `billing`
 --
 
-CREATE TABLE IF NOT EXISTS `billing` (
+CREATE TABLE `billing` (
   `billId` varchar(10) NOT NULL,
   `type` varchar(50) NOT NULL,
   `amount` decimal(18,2) NOT NULL,
   `billTo` varchar(80) NOT NULL,
   `billingDate` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `billing`
+-- 转存表中的数据 `billing`
 --
 
 INSERT INTO `billing` (`billId`, `type`, `amount`, `billTo`, `billingDate`) VALUES
@@ -97,80 +98,86 @@ INSERT INTO `billing` (`billId`, `type`, `amount`, `billTo`, `billingDate`) VALU
 ('BIL009', 'Wifi Net ', 500.00, 'U009', '2015-04-17'),
 ('BIL009', 'tv disc bill', 200.00, 'U009', '2015-04-17'),
 ('BIL009', 'Paper', 50.00, 'U009', '2015-04-17'),
-('BIL009', 'Boishak Clelabration', 250.00, 'U009', '2015-04-17');
+('BIL009', 'Boishak Clelabration', 250.00, 'U009', '2015-04-17'),
+('BIL0010', '123', 123.00, 'U0012', '2023-12-17'),
+('BIL0011', 'Paper', 123.00, 'U009', '2023-12-17');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blocks`
+-- 表的结构 `blocks`
 --
 
-CREATE TABLE IF NOT EXISTS `blocks` (
+CREATE TABLE `blocks` (
   `blockId` varchar(10) NOT NULL,
   `blockNo` varchar(10) NOT NULL,
   `blockName` varchar(30) NOT NULL,
   `description` varchar(80) NOT NULL,
   `isActive` varchar(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `blocks`
+-- 转存表中的数据 `blocks`
 --
 
 INSERT INTO `blocks` (`blockId`, `blockNo`, `blockName`, `description`, `isActive`) VALUES
-('BL004', 'BL-01', 'First Block', 'North Part Of the colony', 'Y');
+('BL004', 'BL-03', 'First Block', 'North Part Of the colony\"\"', 'Y'),
+('BL006', 'BL-01', 'Third Block', '123', 'Y');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cost`
+-- 表的结构 `cost`
 --
 
-CREATE TABLE IF NOT EXISTS `cost` (
+CREATE TABLE `cost` (
   `serial` int(11) NOT NULL,
   `type` varchar(50) NOT NULL,
   `amount` decimal(18,2) NOT NULL,
   `date` date NOT NULL,
   `description` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `cost`
+-- 转存表中的数据 `cost`
 --
 
 INSERT INTO `cost` (`serial`, `type`, `amount`, `date`, `description`) VALUES
-(4, 'Bazar', 2000.00, '2015-02-27', '2days Meal bazar'),
-(5, 'Net bill', 5000.00, '2015-04-18', 'BTCL Internet Connection Bill');
+(4, 'Bazar', 2000.00, '2023-12-13', '2days Meal bazar'),
+(5, 'Net bill', 5000.00, '2023-12-13', 'BTCL Internet Connection Bill'),
+(6, 'Aircond', 50000.00, '2023-12-13', '123');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `deposit`
+-- 表的结构 `deposit`
 --
 
-CREATE TABLE IF NOT EXISTS `deposit` (
+CREATE TABLE `deposit` (
   `serial` int(11) NOT NULL,
   `userId` varchar(10) NOT NULL,
   `amount` decimal(18,2) NOT NULL,
   `depositDate` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `deposit`
+-- 转存表中的数据 `deposit`
 --
 
 INSERT INTO `deposit` (`serial`, `userId`, `amount`, `depositDate`) VALUES
 (6, 'U008', 6000.00, '2015-02-27'),
-(7, 'U009', 5500.00, '2015-02-27'),
-(8, 'U009', 2000.00, '2015-04-17');
+(7, 'U009', 6000.00, '2023-12-13'),
+(9, 'U008', 50000.00, '2023-12-13'),
+(10, 'U0012', 50000.00, '2023-12-17'),
+(11, 'U0012', 6000.00, '2023-12-17');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employee`
+-- 表的结构 `employee`
 --
 
-CREATE TABLE IF NOT EXISTS `employee` (
+CREATE TABLE `employee` (
   `serial` int(11) NOT NULL,
   `empId` varchar(10) NOT NULL,
   `userGroupId` varchar(10) NOT NULL,
@@ -186,194 +193,236 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `blockNo` varchar(10) NOT NULL,
   `isActive` varchar(1) NOT NULL,
   `perPhoto` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `employee`
+-- 转存表中的数据 `employee`
 --
 
 INSERT INTO `employee` (`serial`, `empId`, `userGroupId`, `name`, `empType`, `gender`, `dob`, `cellNo`, `address`, `doj`, `designation`, `salary`, `blockNo`, `isActive`, `perPhoto`) VALUES
 (1, 'EMP003', 'UG003', 'Mr. Sabbir Alam', 'Care Taker', 'Male', '1995-06-20', '01710123456', ' Dhanmoni,Dahaka-1207', '2015-02-11', 'Asistant Care', 5000.00, 'BL-01', 'Y', 'EMP003.jpg'),
-(2, 'EMP004', 'UG003', 'Mst jabeda ', 'Cook', 'Female', '1994-06-14', '01720123456', ' Shukrabad-1207', '2015-01-27', 'Cook', 5000.00, 'BL-01', 'Y', 'EMP004.jpeg');
+(2, 'EMP004', 'UG003', 'Mst jabeda ', 'Cook', 'Female', '1994-06-14', '01720123456', ' Shukrabad-1207', '2015-01-27', 'Cook', 5000.00, 'BL-01', 'Y', 'EMP004.jpeg'),
+(3, 'EMP005', 'UG003', 'ChyeWennHan', '123', 'Female', '2023-11-27', '01832ad', '     123', '2023-11-28', '123', 123.00, '123', 'Y', 'EMP005.png'),
+(6, 'EMP006', 'UG003', 'ChyeWennHan', '123', 'Male', '2023-12-17', '123', ' 123', '2023-12-17', '123', 123.00, '123', 'N', 'EMP006.png');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feesinfo`
+-- 表的结构 `feesinfo`
 --
 
-CREATE TABLE IF NOT EXISTS `feesinfo` (
+CREATE TABLE `feesinfo` (
   `serial` int(11) NOT NULL,
   `type` varchar(80) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   `amount` decimal(18,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `feesinfo`
+-- 转存表中的数据 `feesinfo`
 --
 
 INSERT INTO `feesinfo` (`serial`, `type`, `description`, `amount`) VALUES
 (9, 'Wifi', 'internet charge', 300.00),
 (10, 'TV', 'Television', 60.00),
-(11, 'paper', 'Paper Monthly', 30.00);
+(12, 'Aircond', 'aircond maintain', 300.00);
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `meal`
---
+-- 表的结构 `meal`
 
-CREATE TABLE IF NOT EXISTS `meal` (
+CREATE TABLE `meal` (
   `serial` int(11) NOT NULL,
   `userId` varchar(10) NOT NULL,
+  `photo` varchar(255),
+  `title` varchar(255),
+  `unitPrice` decimal(10,2),
+  `status` varchar(10),
   `noOfMeal` int(11) NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `meal`
---
 
-INSERT INTO `meal` (`serial`, `userId`, `noOfMeal`, `date`) VALUES
-(9, 'U009', 3, '2015-02-27'),
-(10, 'U008', 2, '2015-02-27'),
-(11, 'U009', 2, '2015-04-17');
+-- 转存表中的数据 `meal`
+
+INSERT INTO `meal` (`serial`, `userId`, `photo`, `title`, `unitPrice`, `status`, `noOfMeal`, `date`) VALUES
+(1, 'U008', 'meal1.png', 'Meal 1', 5.99, 'Active', 2, '2015-02-27'),
+(2, 'U0013', 'meal2.png', 'Meal 2', 7.99, 'Inactive', 2, '2015-04-17');
+
+
+
+-- 表的结构 `cart`
+CREATE TABLE `cart` (
+  `serial` int(11) NOT NULL,
+  `userId` varchar(10) NOT NULL,
+  `mealId` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `totalPayment` decimal(10,2),
+  `status` varchar(10),
+  `date` date
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- 转存表中的数据 `cart`
+INSERT INTO `cart` (`serial`, `userId`, `mealId`, `quantity`, `totalPayment`, `status`, `date`) VALUES
+(1, 'U008', 1, 1, 11.99, 'Pending', '2023-12-18'),
+(2, 'U0013', 2, 2, 23.50, 'Done', '2023-12-18');
 
 -- --------------------------------------------------------
 
+-- 表的结构 `orderpayment`
+CREATE TABLE `orderpayment` (
+  `serial` int(11) NOT NULL,
+  `userId` varchar(10) NOT NULL,
+  `cartId` int(11) NOT NULL,
+  `mealId` int(11) NOT NULL,
+  `date` date
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- 转存表中的数据 `orderpayment`
+INSERT INTO `orderpayment` (`serial`, `userId`, `cartId`, `mealId`, `date`) VALUES
+(1, 'U008', 1, 1, '2023-12-18'),
+(2, 'U0012', 2, 2, '2023-12-18');
+
+
+-- --------------------------------------------------------
+
+
 --
--- Table structure for table `mealrate`
+-- 表的结构 `mealrate`
 --
 
-CREATE TABLE IF NOT EXISTS `mealrate` (
+CREATE TABLE `mealrate` (
   `rate` decimal(18,2) NOT NULL,
   `note` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `mealrate`
+-- 转存表中的数据 `mealrate`
 --
 
 INSERT INTO `mealrate` (`rate`, `note`) VALUES
-(80.00, 'Feb,2015');
+(80.00, 'Feb,2015'),
+(123.00, '123');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notice`
+-- 表的结构 `notice`
 --
 
-CREATE TABLE IF NOT EXISTS `notice` (
+CREATE TABLE `notice` (
   `serial` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
   `createdDate` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `notice`
+-- 转存表中的数据 `notice`
 --
 
 INSERT INTO `notice` (`serial`, `title`, `description`, `createdDate`) VALUES
-(6, '21st February Celebration', '21st February Celebration,rali,etc', '2015-02-27 15:34:40'),
-(7, 'Happy New Year 2015', 'Happy New Year', '2015-02-27 15:35:25');
+(6, '21st February Celebration123', '21st February Celebration,rali,etc', '2023-12-17 11:25:22'),
+(7, 'Happy New Year 2015', 'Happy New Year', '2015-02-27 15:35:25'),
+(9, '	Happy New Year', '	Happy New Year', '2023-12-17 11:53:44');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payment`
+-- 表的结构 `payment`
 --
 
-CREATE TABLE IF NOT EXISTS `payment` (
+CREATE TABLE `payment` (
   `serial` int(11) NOT NULL,
   `description` varchar(100) NOT NULL,
   `paymentTo` varchar(100) NOT NULL,
   `amount` decimal(18,2) NOT NULL,
   `paymentBy` varchar(50) NOT NULL,
   `paymentDate` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `payment`
+-- 转存表中的数据 `payment`
 --
 
 INSERT INTO `payment` (`serial`, `description`, `paymentTo`, `amount`, `paymentBy`, `paymentDate`) VALUES
-(2, 'Hostel Equipment(TV)', 'Md Jolil', 4000.00, 'Cash', '2015-02-27'),
 (3, 'Paper Bill', 'Mr Silblu', 500.00, 'Cash', '2015-02-27');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rooms`
+-- 表的结构 `rooms`
 --
 
-CREATE TABLE IF NOT EXISTS `rooms` (
+CREATE TABLE `rooms` (
   `roomId` varchar(10) NOT NULL,
   `roomNo` varchar(20) NOT NULL,
   `blockId` varchar(10) NOT NULL,
   `noOfSeat` int(11) NOT NULL,
   `description` varchar(50) DEFAULT NULL,
   `isActive` varchar(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `rooms`
+-- 转存表中的数据 `rooms`
 --
 
 INSERT INTO `rooms` (`roomId`, `roomNo`, `blockId`, `noOfSeat`, `description`, `isActive`) VALUES
 ('RM004', 'R-01', 'BL-01', 4, 'Block-01(North)', 'Y'),
-('RM006', 'R-02', 'BL-01', 2, 'Block-01(North)', 'Y');
+('RM006', 'R-02', 'BL-01', 2, 'Block-01(North)', 'Y'),
+('RM007', 'R-03', 'BL-02', 4, 'Block-02(West)', 'Y');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `salary`
+-- 表的结构 `salary`
 --
 
-CREATE TABLE IF NOT EXISTS `salary` (
+CREATE TABLE `salary` (
   `serial` int(11) NOT NULL,
   `empId` varchar(10) NOT NULL,
   `monthYear` varchar(30) NOT NULL,
   `amount` decimal(18,2) NOT NULL,
   `addedDate` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `salary`
+-- 转存表中的数据 `salary`
 --
 
 INSERT INTO `salary` (`serial`, `empId`, `monthYear`, `amount`, `addedDate`) VALUES
-(4, 'EMP003', 'January-2015', 5000.00, '2015-02-27'),
-(5, 'EMP004', 'February-2015', 5000.00, '2015-02-27');
+(5, 'EMP004', 'February-2015', 5000.00, '2015-02-27'),
+(7, 'EMP003', 'May-2023', 50000.00, '2023-12-16'),
+(9, 'EMP004', 'February-2023', 6000.00, '2023-12-16');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `seataloc`
+-- 表的结构 `seataloc`
 --
 
-CREATE TABLE IF NOT EXISTS `seataloc` (
+CREATE TABLE `seataloc` (
   `userId` varchar(10) NOT NULL,
   `roomNo` varchar(10) NOT NULL,
   `blockNo` varchar(30) NOT NULL,
   `monthlyRent` decimal(18,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `seataloc`
+-- 转存表中的数据 `seataloc`
 --
 
 INSERT INTO `seataloc` (`userId`, `roomNo`, `blockNo`, `monthlyRent`) VALUES
+('U008', 'R-01', 'BL-01', 32000.00),
 ('U009', 'R-02', 'BL-01', 7500.00);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stdpayment`
+-- 表的结构 `stdpayment`
 --
 
-CREATE TABLE IF NOT EXISTS `stdpayment` (
+CREATE TABLE `stdpayment` (
   `serial` int(11) NOT NULL,
   `userId` varchar(10) NOT NULL,
   `paymentBy` varchar(50) NOT NULL,
@@ -382,24 +431,27 @@ CREATE TABLE IF NOT EXISTS `stdpayment` (
   `transDate` date NOT NULL,
   `remark` varchar(50) NOT NULL,
   `isApprove` varchar(3) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `stdpayment`
+-- 转存表中的数据 `stdpayment`
 --
 
 INSERT INTO `stdpayment` (`serial`, `userId`, `paymentBy`, `transNo`, `amount`, `transDate`, `remark`, `isApprove`) VALUES
 (3, 'U008', 'DBBL', '+8801755305154', 6000.00, '2015-02-26', 'Feb,2015 Bill', 'Yes'),
 (4, 'U009', 'Bank', 'DD-4556', 5500.00, '2015-02-27', 'test', 'Yes'),
-(5, 'U009', 'Bkash', '0185236974', 6000.00, '2015-04-17', 'all cost rent meal,net,tv', 'Yes');
+(5, 'U009', 'Bkash', '0185236974', 6000.00, '2015-04-17', 'all cost rent meal,net,tv', 'Yes'),
+(7, 'U0012', 'Bank', '0182818612', 50000.00, '2023-12-22', '123', 'Yes'),
+(8, 'U0012', 'Bank', '0182818612', 123.00, '2023-12-17', 'test', 'Yes'),
+(9, 'U0012', 'Bkash', '0182818612', 12333.00, '2023-12-08', 'test', 'No');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `studentinfo`
+-- 表的结构 `studentinfo`
 --
 
-CREATE TABLE IF NOT EXISTS `studentinfo` (
+CREATE TABLE `studentinfo` (
   `serial` int(11) NOT NULL,
   `userId` varchar(10) NOT NULL,
   `userGroupId` varchar(10) NOT NULL,
@@ -427,49 +479,51 @@ CREATE TABLE IF NOT EXISTS `studentinfo` (
   `perPhoto` varchar(20) NOT NULL,
   `admitDate` date NOT NULL,
   `isActive` varchar(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `studentinfo`
+-- 转存表中的数据 `studentinfo`
 --
 
 INSERT INTO `studentinfo` (`serial`, `userId`, `userGroupId`, `name`, `studentId`, `cellNo`, `email`, `nameOfInst`, `program`, `batchNo`, `gender`, `dob`, `bloodGroup`, `nationality`, `nationalId`, `passportNo`, `fatherName`, `motherName`, `fatherCellNo`, `motherCellNo`, `localGuardian`, `localGuardianCell`, `presentAddress`, `parmanentAddress`, `perPhoto`, `admitDate`, `isActive`) VALUES
+(10, 'U0012', 'UG004', 'ChyeWennHan', 'wennhan', '01832ad', 'chyewennhan@gmail.com', 'asd', 'as', '12341', 'Male', '2023-12-07', 'O(un)', 'China', '123', '123', '123', '123', '123', '123', '123', '123', ' 123  ', '123', 'U0012.jpg', '2023-12-13', 'Y'),
 (8, 'U008', 'UG004', 'Md. Rasel', '151-15-1155', '+8801755000002', 'rasel@gmail.com', 'DIU', 'CSE', '34', 'Male', '1994-06-14', 'AB(+)', 'Bangladeshi', 'N/A', 'N/A', 'Mr. Father', '+8801722000000', 'Mst. Mother', '+8801722000005', 'Mr. Local Boy', '+8801722000001', ' Dhanmondi,Dhaka-1207 ', 'Dhanmondi,Dhaka-1207', 'U008.jpg', '2015-02-27', 'Y'),
 (9, 'U009', 'UG004', 'Md Zahidul', '151-15-1122', '+881722545660', 'zahidul@gmail.com', 'DIU', 'CSE', '34', 'Male', '2005-07-13', 'O(+)', 'Bangladeshi', 'N/A', 'N/A', 'Mr. Father', 'Mst Mother', '+8801710565958', '+8801710565958', 'Mr Local boy', '+8801710565960', ' Dhanmondi,Dhaka-1207', ' Dhanmondi,Dhaka-1207', 'U009.jpg', '2015-02-27', 'Y');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `timeset`
+-- 表的结构 `timeset`
 --
 
-CREATE TABLE IF NOT EXISTS `timeset` (
+CREATE TABLE `timeset` (
   `inTime` varchar(15) NOT NULL,
   `outTime` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `timeset`
+-- 转存表中的数据 `timeset`
 --
 
 INSERT INTO `timeset` (`inTime`, `outTime`) VALUES
-('07:00 PM', '06:00 AM');
+('07:00 PM', '06:00 AM'),
+('06:00 AM', '12:00 AM');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usergroup`
+-- 表的结构 `usergroup`
 --
 
-CREATE TABLE IF NOT EXISTS `usergroup` (
+CREATE TABLE `usergroup` (
   `serial` int(11) NOT NULL,
   `id` varchar(10) NOT NULL,
   `name` varchar(50) NOT NULL,
   `description` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `usergroup`
+-- 转存表中的数据 `usergroup`
 --
 
 INSERT INTO `usergroup` (`serial`, `id`, `name`, `description`) VALUES
@@ -481,10 +535,10 @@ INSERT INTO `usergroup` (`serial`, `id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- 表的结构 `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `serial` int(11) NOT NULL,
   `userId` varchar(10) NOT NULL,
   `userGroupId` varchar(10) NOT NULL,
@@ -494,197 +548,258 @@ CREATE TABLE IF NOT EXISTS `users` (
   `verifyCode` varchar(10) NOT NULL,
   `expireDate` date NOT NULL,
   `isVerifed` varchar(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `users`
+-- 转存表中的数据 `users`
 --
 
 INSERT INTO `users` (`serial`, `userId`, `userGroupId`, `name`, `loginId`, `password`, `verifyCode`, `expireDate`, `isVerifed`) VALUES
-(1, 'U001', 'UG001', 'System Admin', 'admin', '513b098ff55b4f375d6210a5f45996dd', 'av799', '2015-08-01', 'Y'),
 (10, 'U008', 'UG004', 'Md. Rasel', 'student', '513b098ff55b4f375d6210a5f45996dd', 'vhms2115', '2115-01-04', 'Y'),
-(14, 'EMP003', 'UG003', 'Mr. Sabbir Alam', 'employee', '513b098ff55b4f375d6210a5f45996dd', 'vhms2115', '2115-01-04', 'Y');
+(14, 'EMP003', 'UG003', 'Mr. Sabbir Alam', 'employee', '513b098ff55b4f375d6210a5f45996dd', 'vhms2115', '2115-01-04', 'Y'),
+(16, 'U0012', 'UG004', 'ChyeWennHan', 'wennhan', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y'),
+(17, 'EMP005', 'UG003', 'ChyeWennHan', '01832ad', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y'),
+(18, 'EMP006', 'UG003', 'ChyeWennHan', '123', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y'),
+(19, 'U0013', 'UG001', '123', 'admin', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y');
 
 --
--- Indexes for dumped tables
+-- 转储表的索引
 --
 
 --
--- Indexes for table `attendence`
+-- 表的索引 `attendence`
 --
 ALTER TABLE `attendence`
-  ADD PRIMARY KEY (`serial`), ADD UNIQUE KEY `serial` (`serial`);
+  ADD PRIMARY KEY (`serial`),
+  ADD UNIQUE KEY `serial` (`serial`);
 
 --
--- Indexes for table `auto_id`
+-- 表的索引 `auto_id`
 --
 ALTER TABLE `auto_id`
   ADD UNIQUE KEY `serial` (`serial`);
 
 --
--- Indexes for table `blocks`
+-- 表的索引 `blocks`
 --
 ALTER TABLE `blocks`
-  ADD PRIMARY KEY (`blockId`), ADD UNIQUE KEY `blockId` (`blockId`);
+  ADD PRIMARY KEY (`blockId`),
+  ADD UNIQUE KEY `blockId` (`blockId`);
 
 --
--- Indexes for table `cost`
+-- 表的索引 `cost`
 --
 ALTER TABLE `cost`
   ADD PRIMARY KEY (`serial`);
 
 --
--- Indexes for table `deposit`
+-- 表的索引 `deposit`
 --
 ALTER TABLE `deposit`
   ADD PRIMARY KEY (`serial`);
 
 --
--- Indexes for table `employee`
+-- 表的索引 `employee`
 --
 ALTER TABLE `employee`
-  ADD PRIMARY KEY (`empId`), ADD UNIQUE KEY `serial` (`serial`), ADD UNIQUE KEY `cellNo` (`cellNo`);
+  ADD PRIMARY KEY (`empId`),
+  ADD UNIQUE KEY `serial` (`serial`),
+  ADD UNIQUE KEY `cellNo` (`cellNo`);
 
 --
--- Indexes for table `feesinfo`
+-- 表的索引 `feesinfo`
 --
 ALTER TABLE `feesinfo`
   ADD PRIMARY KEY (`serial`);
 
+
 --
--- Indexes for table `meal`
+-- 使用表AUTO_INCREMENT `meal`
 --
 ALTER TABLE `meal`
   ADD PRIMARY KEY (`serial`);
 
---
--- Indexes for table `notice`
---
-ALTER TABLE `notice`
-  ADD PRIMARY KEY (`serial`), ADD UNIQUE KEY `serial` (`serial`);
 
 --
--- Indexes for table `payment`
+-- 使用表AUTO_INCREMENT `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`serial`);
+
+
+
+--
+-- 使用表AUTO_INCREMENT `orderpayment`
+--
+ALTER TABLE `orderpayment`
+  ADD PRIMARY KEY (`serial`);
+
+
+
+--
+-- 表的索引 `notice`
+--
+ALTER TABLE `notice`
+  ADD PRIMARY KEY (`serial`),
+  ADD UNIQUE KEY `serial` (`serial`);
+
+--
+-- 表的索引 `payment`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`serial`);
 
 --
--- Indexes for table `rooms`
+-- 表的索引 `rooms`
 --
 ALTER TABLE `rooms`
   ADD PRIMARY KEY (`roomId`);
 
 --
--- Indexes for table `salary`
+-- 表的索引 `salary`
 --
 ALTER TABLE `salary`
   ADD PRIMARY KEY (`serial`);
 
 --
--- Indexes for table `seataloc`
+-- 表的索引 `seataloc`
 --
 ALTER TABLE `seataloc`
   ADD PRIMARY KEY (`userId`);
 
 --
--- Indexes for table `stdpayment`
+-- 表的索引 `stdpayment`
 --
 ALTER TABLE `stdpayment`
   ADD PRIMARY KEY (`serial`);
 
 --
--- Indexes for table `studentinfo`
+-- 表的索引 `studentinfo`
 --
 ALTER TABLE `studentinfo`
-  ADD PRIMARY KEY (`userId`,`serial`), ADD UNIQUE KEY `serial` (`serial`), ADD UNIQUE KEY `userId` (`userId`), ADD UNIQUE KEY `email` (`email`), ADD UNIQUE KEY `cellNo` (`cellNo`);
+  ADD PRIMARY KEY (`userId`,`serial`),
+  ADD UNIQUE KEY `serial` (`serial`),
+  ADD UNIQUE KEY `userId` (`userId`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `cellNo` (`cellNo`);
 
 --
--- Indexes for table `usergroup`
+-- 表的索引 `usergroup`
 --
 ALTER TABLE `usergroup`
-  ADD UNIQUE KEY `serial` (`serial`), ADD UNIQUE KEY `id` (`id`);
+  ADD UNIQUE KEY `serial` (`serial`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
--- Indexes for table `users`
+-- 表的索引 `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`serial`), ADD UNIQUE KEY `serial` (`serial`), ADD UNIQUE KEY `serial_2` (`serial`), ADD UNIQUE KEY `serial_3` (`serial`);
+  ADD PRIMARY KEY (`serial`),
+  ADD UNIQUE KEY `serial` (`serial`),
+  ADD UNIQUE KEY `serial_2` (`serial`),
+  ADD UNIQUE KEY `serial_3` (`serial`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 在导出的表使用AUTO_INCREMENT
 --
 
 --
--- AUTO_INCREMENT for table `attendence`
+-- 使用表AUTO_INCREMENT `attendence`
 --
 ALTER TABLE `attendence`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
--- AUTO_INCREMENT for table `auto_id`
+-- 使用表AUTO_INCREMENT `auto_id`
 --
 ALTER TABLE `auto_id`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
--- AUTO_INCREMENT for table `cost`
+-- 使用表AUTO_INCREMENT `cost`
 --
 ALTER TABLE `cost`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
--- AUTO_INCREMENT for table `deposit`
+-- 使用表AUTO_INCREMENT `deposit`
 --
 ALTER TABLE `deposit`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
--- AUTO_INCREMENT for table `employee`
+-- 使用表AUTO_INCREMENT `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
--- AUTO_INCREMENT for table `feesinfo`
+-- 使用表AUTO_INCREMENT `feesinfo`
 --
 ALTER TABLE `feesinfo`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `meal`
---
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+-- meal
 ALTER TABLE `meal`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT=13;
+
+
+-- cart
+ALTER TABLE `cart`
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT=25;
+
+
+-- orderpayment
+ALTER TABLE `orderpayment`
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT=55;
+
+
 --
--- AUTO_INCREMENT for table `notice`
+-- 使用表AUTO_INCREMENT `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
--- AUTO_INCREMENT for table `payment`
+-- 使用表AUTO_INCREMENT `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- AUTO_INCREMENT for table `salary`
+-- 使用表AUTO_INCREMENT `salary`
 --
 ALTER TABLE `salary`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
--- AUTO_INCREMENT for table `stdpayment`
+-- 使用表AUTO_INCREMENT `stdpayment`
 --
 ALTER TABLE `stdpayment`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
--- AUTO_INCREMENT for table `studentinfo`
+-- 使用表AUTO_INCREMENT `studentinfo`
 --
 ALTER TABLE `studentinfo`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
--- AUTO_INCREMENT for table `usergroup`
+-- 使用表AUTO_INCREMENT `usergroup`
 --
 ALTER TABLE `usergroup`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
--- AUTO_INCREMENT for table `users`
+-- 使用表AUTO_INCREMENT `users`
 --
 ALTER TABLE `users`
-  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `serial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

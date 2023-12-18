@@ -5,7 +5,7 @@
  * Date: 1/4/15
  * Time: 2:04 AM
  */
-$base_url="http://localhost/hms/";
+$base_url="http://localhost:8081/hms/";
 
 $ses = new \sessionManager\sessionManager();
 //$ses->start();
@@ -26,6 +26,8 @@ $name=$ses->Get("name");
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo $base_url;?>dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo $base_url;?>dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link href="<?php echo $base_url;?>dist/css/datepicker.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->

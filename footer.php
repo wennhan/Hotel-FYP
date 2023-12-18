@@ -1,5 +1,5 @@
 <?php
-$base_url="http://localhost/hms/";
+$base_url="http://localhost:8081/hms/";
 ?>
 
 

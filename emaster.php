@@ -5,7 +5,7 @@
  * Date: 1/4/15
  * Time: 2:04 AM
  */
-$base_url="http://localhost/hms/";
+$base_url="http://localhost:8081/hms/";
 
 $ses = new \sessionManager\sessionManager();
 //$ses->start();

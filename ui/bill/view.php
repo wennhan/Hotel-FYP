@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: troot
- * Date: 1/5/15
- * Time: 10:56 AM
- */
 
 ?>
 <?php
 
 $GLOBALS['title']="Bill-HMS";
-$base_url="http://localhost/hms/";
+$base_url="http://localhost:8081/hms/";
 $GLOBALS['output']='';
 $GLOBALS['isData']="";
 
