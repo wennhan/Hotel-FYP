@@ -431,6 +431,7 @@ CREATE TABLE `stdpayment` (
   `amount` decimal(18,2) NOT NULL,
   `transDate` date NOT NULL,
   `remark` varchar(50) NOT NULL,
+  `status` varchar(10),
   `isApprove` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -438,13 +439,13 @@ CREATE TABLE `stdpayment` (
 -- 转存表中的数据 `stdpayment`
 --
 
-INSERT INTO `stdpayment` (`serial`, `userId`, `paymentBy`, `transNo`, `amount`, `transDate`, `remark`, `isApprove`) VALUES
-(3, 'U008', 'DBBL', '+8801755305154', 6000.00, '2015-02-26', 'Feb,2015 Bill', 'Yes'),
-(4, 'U009', 'Bank', 'DD-4556', 5500.00, '2015-02-27', 'test', 'Yes'),
-(5, 'U009', 'Bkash', '0185236974', 6000.00, '2015-04-17', 'all cost rent meal,net,tv', 'Yes'),
-(7, 'U0012', 'Bank', '0182818612', 50000.00, '2023-12-22', '123', 'Yes'),
-(8, 'U0012', 'Bank', '0182818612', 123.00, '2023-12-17', 'test', 'Yes'),
-(9, 'U0012', 'Bkash', '0182818612', 12333.00, '2023-12-08', 'test', 'No');
+INSERT INTO `stdpayment` (`serial`, `userId`, `paymentBy`, `transNo`, `amount`, `transDate`, `remark`,`status`, `isApprove`) VALUES
+(3, 'U008', 'DBBL', '+8801755305154', 6000.00, '2015-02-26', 'Feb,2015 Bill', 'Paid', 'Yes'),
+(4, 'U009', 'Bank', 'DD-4556', 5500.00, '2015-02-27', 'test', 'Paid','Yes'),
+(5, 'U009', 'Bkash', '0185236974', 6000.00, '2015-04-17', 'all cost rent meal,net,tv','Paid', 'Yes'),
+(7, 'U0012', 'Bank', '0182818612', 50000.00, '2023-12-22', '123','Paid', 'Yes'),
+(8, 'U0012', 'Bank', '0182818612', 123.00, '2023-12-17', 'test', 'Paid','Yes'),
+(9, 'U0012', 'Bkash', '0182818612', 12333.00, '2023-12-08', 'test','Unpaid', 'No');
 
 -- --------------------------------------------------------
 
