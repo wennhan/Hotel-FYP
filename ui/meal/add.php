@@ -1,7 +1,7 @@
 <?php
 
-$GLOBALS['title']="Meal-HMS";
-$base_url="http://localhost:8081/hms/";
+$GLOBALS['title'] = "Meal-HMS";
+$base_url = "http://localhost:8081/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -10,14 +10,9 @@ require('./../../inc/fileUploader.php');
 
 $ses = new \sessionManager\sessionManager();
 $ses->start();
-if($ses->isExpired())
-{
-    header( 'Location:'.$base_url.'login.php');
-
-
-}
-else
-{
+if ($ses->isExpired()) {
+    header('Location:' . $base_url . 'login.php');
+} else {
 
 
 
@@ -35,7 +30,7 @@ else
                 $filenameOnly = $pathInfo['filename'];
                 $flup = new fileUploader\fileUploader();
                 $perPhoto = $flup->upload("/hms/files/photos/", $_FILES['perPhoto'], $filenameOnly);
-                
+
 
 
 
@@ -46,64 +41,48 @@ else
                     'photo' => $perPhoto,
                     'status' => $_POST['status'],
                     'unitPrice' => $_POST['unitPrice'],
-                    'date' =>date("Y-m-d")
+                    'date' => date("Y-m-d")
 
 
                 );
-                $result = $db->insertData("meal",$data);
+                $result = $db->insertData("meal", $data);
 
-                if($result>=0)
-                {
+                if ($result >= 0) {
 
                     //  $db->close();
                     echo '<script type="text/javascript"> alert("Meal Added Successfully.");window.location="add.php";</script>';
-                }
-                elseif(strpos($result,'Duplicate') !== false)
-                {
+                } elseif (strpos($result, 'Duplicate') !== false) {
                     echo '<script type="text/javascript"> alert("Meal Already Exits!");window.location="add.php"; </script>';
                     getData();
-                }
-                else
-                {
+                } else {
                     echo '<script type="text/javascript"> alert("' . $result . '");window.location="add.php";</script>';
                 }
-
-            }
-            else
-            {
+            } else {
                 echo '<script type="text/javascript"> alert("' . $msg . '");window.location="add.php";</script>';
             }
         }
-    }
-    else
-    {
+    } else {
 
         getData();
     }
-
-
 }
- function getData()
- {
-     $db = new \dbPlayer\dbPlayer();
-     $msg = $db->open();
-     $data = array();
-     $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
-     $GLOBALS['output']='';
+function getData()
+{
+    $db = new \dbPlayer\dbPlayer();
+    $msg = $db->open();
+    $data = array();
+    $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
+    $GLOBALS['output'] = '';
 
-     if ($result !== false) 
-     {
+    if ($result !== false) {
         while ($row = $result->fetch_array()) {
-             $GLOBALS['isData']="1";
-             $GLOBALS['output'] .= '<option value="'.$row['userId'].'">'.$row['name'].'</option>';
-
-         }
-     }
-     else
-     {
+            $GLOBALS['isData'] = "1";
+            $GLOBALS['output'] .= '<option value="' . $row['userId'] . '">' . $row['name'] . '</option>';
+        }
+    } else {
         echo '<script type="text/javascript"> alert("' . $result . '");</script>';
-     }
- }
+    }
+}
 ?>
 <?php include('./../../master.php'); ?>
 <div id="page-wrapper">
@@ -122,7 +101,7 @@ else
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <form name="meal" action="add.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
+                    <form name="meal" action="add.php" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 
 
                         <div class="row">
@@ -131,7 +110,7 @@ else
                                     <div class="form-group">
                                         <label>Student Name</label>
                                         <select class="form-control" name="person" required="">
-                                            <?php echo $GLOBALS['output'];?>
+                                            <?php echo $GLOBALS['output']; ?>
 
                                         </select>
                                     </div>
@@ -140,7 +119,7 @@ else
 
                                 <div class="col-lg-4">
                                     <div class="form-group ">
-                                        <label>No Of Meal</label>
+                                        <label>Total ordered</label>
                                         <div class="input-group">
 
                                             <span class="input-group-addon"><i class="fa fa-info"></i> </span>
@@ -154,19 +133,19 @@ else
 
 
                         <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="col-lg-4">
-                                        <div class="form-group ">
-                                            <label>Photo</label>
-                                            <div class="input-group">
+                            <div class="col-lg-12">
+                                <div class="col-lg-4">
+                                    <div class="form-group ">
+                                        <label>Photo</label>
+                                        <div class="input-group">
 
-                                                <input type="file" class="form-control" name="perPhoto" required>
-                                            </div>
+                                            <input type="file" class="form-control" name="perPhoto" required>
                                         </div>
-
                                     </div>
 
-                        <div class="col-lg-4">
+                                </div>
+
+                                <div class="col-lg-4">
                                     <div class="form-group ">
                                         <label>Title</label>
                                         <div class="input-group">
@@ -181,56 +160,56 @@ else
                         </div>
 
                         <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>Status</label>
-                                            <select class="form-control" name="status" required="">
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">Inactive</option>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control" name="status" required="">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
 
-                                            </select>
-                                        </div>
-                                    </div>
+                                </select>
+                            </div>
+                        </div>
 
 
                         <div class="col-lg-4">
-                                    <div class="form-group ">
-                                        <label>Unit Price</label>
-                                        <div class="input-group">
+                            <div class="form-group ">
+                                <label>Unit Price</label>
+                                <div class="input-group">
 
-                                            <span class="input-group-addon"><i class="fa fa-info"></i> </span>
-                                            <input type="text" placeholder="Unit Price" class="form-control" name="unitPrice" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                     
-
-
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="col-lg-5"></div>
-                                <div class="col-lg-2">
-                                    <div class="form-group ">
-                                        <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-5">
+                                    <span class="input-group-addon"><i class="fa fa-info"></i> </span>
+                                    <input type="text" placeholder="Unit Price" class="form-control" name="unitPrice" required>
                                 </div>
                             </div>
                         </div>
-                    </form>
+
                 </div>
-                <!-- /.panel-body -->
             </div>
+
+
+
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-5"></div>
+                    <div class="col-lg-2">
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-success" name="btnSave"><i class="fa fa-2x fa-check"></i>Save</button>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-5">
+                    </div>
+                </div>
+            </div>
+            </form>
         </div>
-        <!-- /.col-lg-12 -->
+        <!-- /.panel-body -->
     </div>
+</div>
+<!-- /.col-lg-12 -->
+</div>
 
 </div>
 <!-- /#page-wrapper -->
@@ -238,12 +217,9 @@ else
 
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function() {
 
 
 
     });
-
-
-
 </script>

@@ -247,7 +247,7 @@ CREATE TABLE `meal` (
 
 INSERT INTO `meal` (`serial`, `userId`, `photo`, `title`, `unitPrice`, `status`, `noOfMeal`, `date`) VALUES
 (1, 'U008', 'meal1.png', 'Meal 1', 5.99, 'Active', 2, '2015-02-27'),
-(2, 'U0013', 'meal2.png', 'Meal 2', 7.99, 'Inactive', 2, '2015-04-17');
+(2, 'U008', 'meal2.png', 'Meal 2', 7.99, 'Active', 2, '2015-04-17');
 
 
 
@@ -258,14 +258,13 @@ CREATE TABLE `cart` (
   `mealId` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `totalPayment` decimal(10,2),
-  `status` varchar(10),
   `date` date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- 转存表中的数据 `cart`
-INSERT INTO `cart` (`serial`, `userId`, `mealId`, `quantity`, `totalPayment`, `status`, `date`) VALUES
-(1, 'U008', 1, 1, 11.99, 'Pending', '2023-12-18'),
-(2, 'U0013', 2, 2, 23.50, 'Done', '2023-12-18');
+INSERT INTO `cart` (`serial`, `userId`, `mealId`, `quantity`, `totalPayment`, `date`) VALUES
+(1, 'U008', 1, 1, 11.99,  '2023-12-18'),
+(2, 'U008', 2, 2, 23.50, '2023-12-18');
 
 -- --------------------------------------------------------
 
@@ -273,15 +272,17 @@ INSERT INTO `cart` (`serial`, `userId`, `mealId`, `quantity`, `totalPayment`, `s
 CREATE TABLE `orderpayment` (
   `serial` int(11) NOT NULL,
   `userId` varchar(10) NOT NULL,
-  `cartId` int(11) NOT NULL,
   `mealId` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `totalPayment` decimal(10,2),
+  `status` varchar(10) NOT NULL,
   `date` date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- 转存表中的数据 `orderpayment`
-INSERT INTO `orderpayment` (`serial`, `userId`, `cartId`, `mealId`, `date`) VALUES
-(1, 'U008', 1, 1, '2023-12-18'),
-(2, 'U0012', 2, 2, '2023-12-18');
+INSERT INTO `orderpayment` (`serial`, `userId`, `mealId`, `status`,`quantity`, `totalPayment`, `date`) VALUES
+(1, 'U008',  1, 'Pending',1, 11.99, '2023-12-18'),
+(2, 'U008',  2, 'Done', 1,23.50, '2023-12-18');
 
 
 -- --------------------------------------------------------

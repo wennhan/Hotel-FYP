@@ -34,7 +34,7 @@ if ($ses->isExpired()) {
         // WHERE userId IN (SELECT userId FROM studentinfo WHERE isActive='Y');
         // ");
 
-        $result = $db->getData("SELECT a.serial,b.name,a.noOfMeal, a.photo, a.title, a.unitPrice, a.status,DATE_FORMAT(a.date, '%D %M,%Y') as mealDate FROM meal as a,studentinfo as b where a.userId=b.userId and b.isActive='Y' and a.status != 'Removed'");
+        $result = $db->getData("SELECT a.serial,b.name,a.noOfMeal, a.photo, a.title, a.unitPrice, a.status,DATE_FORMAT(a.date, '%D %M,%Y') as mealDate FROM meal as a,studentinfo as b where a.userId=b.userId and b.isActive='Y' and a.status != 'Removed' and a.status != 'Inactive'");
         $GLOBALS['output'] = '';
         if ($result !== false) {
 

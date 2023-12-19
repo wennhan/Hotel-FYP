@@ -41,7 +41,9 @@ if ($ses->isExpired()) {
                                  m.title, m.unitPrice, m.photo
                            FROM cart AS c
                            INNER JOIN meal AS m ON c.mealId = m.serial
-                           WHERE c.userId = '$loginId'");
+                           WHERE c.userId = '$loginId'
+                           and m.status != 'Inactive'
+                           and m.status != 'Removed'");
 
         // Check if the query was successful
         if ($cartResult !== false) {
@@ -91,14 +93,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $msg = $db->open();
 
         if ($msg == "true") {
-            // Iterate through the cart items and insert them into the 'orderpayment' table
             $cartResult = $db->getData("SELECT c.serial, c.userId, c.mealId, c.quantity, c.totalPayment, c.date,
                                      m.title, m.unitPrice, m.photo
                                FROM cart AS c
                                INNER JOIN meal AS m ON c.mealId = m.serial
-                               WHERE c.userId = '$loginId'");
+                               WHERE c.userId = '$loginId'
+                               ");
 
-            // Check if the query was successful
             if ($cartResult !== false) {
                 while ($row = $cartResult->fetch_array()) {
                     $userId = $ses->Get("userIdLoged");
@@ -106,25 +107,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $orderPaymentData = array(
                         'userId' => $userId,
-                        'cartId' => $row['serial'],
                         'mealId' => $row['mealId'],
+                        'totalPayment' => $row['totalPayment'],
+                        'quantity' => $row['quantity'],
+                        'status' => 'Pending',
                         'date' => $date
                     );
-
 
                     $resultOrderPayment = $db->insertData("orderpayment", $orderPaymentData);
                     $result = $db->delete("delete from cart where userId='" . $userId . "'");
 
+                    $mealTotalOrderedDetails = $db->getData("SELECT noOfMeal FROM meal WHERE serial = " . $row['mealId']);
+                    $currentNoOfMeal = $mealTotalOrderedDetails->fetch_array()['noOfMeal'];
+
+                    $newNoOfMeal = $row['quantity'] + $currentNoOfMeal;
+
+                    $dataNoOfMeal = array(
+                        'noOfMeal' => $newNoOfMeal,
+                    );
+
+                    $db->updateData("meal", "serial", $row['mealId'], $dataNoOfMeal);
+
                     if ($resultOrderPayment < 0) {
                         echo '<script type="text/javascript"> alert("Error confirming order."); window.location="studentCart.php";</script>';
-                        exit; // Stop further processing in case of an error
+                        exit;
                     }
                 }
 
-                // All cart items inserted successfully
                 echo '<script type="text/javascript"> alert("Order confirmed successfully."); window.location="studentCart.php";</script>';
             } else {
-                // Handle the case when the query fails
                 echo '<script type="text/javascript"> alert("' . $cartResult . '"); window.location="studentCart.php";</script>';
             }
         } else {

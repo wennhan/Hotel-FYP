@@ -43,23 +43,19 @@ if ($ses->isExpired()) {
         m.status AS mealStatus,
         m.noOfMeal,
         DATE_FORMAT(m.date, '%D %M,%Y') AS mealDate,
-        c.serial AS cartSerial,
-        c.userId AS cartUserId,
-        c.mealId,
-        c.quantity,
-        c.totalPayment,
-        c.date AS cartDate,
-        op.status AS orderStatus
+        op.totalPayment,
+        op.quantity,
+        op.status AS orderStatus,
+        op.date AS orderDate
     FROM
         meal AS m
     JOIN
-        cart AS c ON m.serial = c.mealId
-    JOIN
-        orderpayment AS op ON c.serial = op.cartId
+        orderpayment AS op ON m.serial = op.mealId
     WHERE
-        m.userId = 'U008'
-        AND m.status != 'Removed'
-        AND op.status != 'Done';   
+        op.userId = '$loginId'
+        AND op.status != 'Done'
+        and m.status != 'Inactive'
+        and m.status != 'Removed';
     ");
 
         $GLOBALS['output'] = '';
@@ -86,7 +82,7 @@ if ($ses->isExpired()) {
                 $GLOBALS['output'] .= "<td> <img src='./../../files/photos/" . $row['photo'] . "' alt='Avatar' height='100px' class='img-responsive img-rounded proimg'> </td>";
                 $GLOBALS['output'] .= "<td>" . $row['title'] . "</td>";
 
-                $GLOBALS['output'] .= "<td>" . $row['unitPrice'] . "</td>";
+                $GLOBALS['output'] .= "<td>" . $row['totalPayment'] . "</td>";
 
                 $GLOBALS['output'] .= "<td>" . $row['quantity'] . "</td>";
 
@@ -128,12 +124,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'userId' => $ses->Get("userIdLoged"),
                 'mealId' => $serial,
                 'quantity' => $quantity,
-                'totalPayment' => $quantity * $unitPrice, // Calculate totalPayment based on quantity and unit price
+                'totalPayment' => $quantity * $unitPrice,
                 'status' => 'Pending',
                 'date' => date("Y-m-d")
             );
 
             $result = $db->insertData("cart", $data);
+
+
+
 
             if ($result >= 0) {
                 echo "Item added to the cart successfully";
