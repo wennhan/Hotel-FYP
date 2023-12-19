@@ -200,9 +200,8 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`serial`, `empId`, `userGroupId`, `name`, `empType`, `gender`, `dob`, `cellNo`, `address`, `doj`, `designation`, `salary`, `blockNo`, `isActive`, `perPhoto`) VALUES
-(1, 'EMP003', 'UG003', 'Mr. Sabbir Alam', 'Care Taker', 'Male', '1995-06-20', '01710123456', ' Dhanmoni,Dahaka-1207', '2015-02-11', 'Asistant Care', 5000.00, 'BL-01', 'Y', 'EMP003.jpg'),
-(2, 'EMP004', 'UG003', 'Mst jabeda ', 'Cook', 'Female', '1994-06-14', '01720123456', ' Shukrabad-1207', '2015-01-27', 'Cook', 5000.00, 'BL-01', 'Y', 'EMP004.jpeg'),
-(3, 'EMP005', 'UG003', 'ChyeWennHan', '123', 'Female', '2023-11-27', '01832ad', '     123', '2023-11-28', '123', 123.00, '123', 'Y', 'EMP005.png'),
+(1, 'EMP003', 'UG003', 'HoDuiNuel', 'Care Taker', 'Male', '1995-06-20', '01710123456', ' Dhanmoni,Dahaka-1207', '2015-02-11', 'Asistant Care', 5000.00, 'BL-01', 'Y', 'EMP003.jpg'),
+(2, 'EMP004', 'UG003', 'MasterChef', 'Cook', 'Female', '1994-06-14', '01720123456', ' Shukrabad-1207', '2015-01-27', 'Cook', 5000.00, 'BL-01', 'Y', 'EMP004.jpeg'),
 (6, 'EMP006', 'UG003', 'ChyeWennHan', '123', 'Male', '2023-12-17', '123', ' 123', '2023-12-17', '123', 123.00, '123', 'N', 'EMP006.png');
 
 -- --------------------------------------------------------
@@ -347,7 +346,7 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`serial`, `description`, `paymentTo`, `amount`, `paymentBy`, `paymentDate`) VALUES
-(3, 'Paper Bill', 'Mr Silblu', 500.00, 'Cash', '2015-02-27');
+(3, 'Paper Bill', 'Civickun', 500.00, 'Cash', '2015-02-27');
 
 -- --------------------------------------------------------
 
@@ -489,8 +488,8 @@ CREATE TABLE `studentinfo` (
 
 INSERT INTO `studentinfo` (`serial`, `userId`, `userGroupId`, `name`, `studentId`, `cellNo`, `email`, `nameOfInst`, `program`, `batchNo`, `gender`, `dob`, `bloodGroup`, `nationality`, `nationalId`, `passportNo`, `fatherName`, `motherName`, `fatherCellNo`, `motherCellNo`, `localGuardian`, `localGuardianCell`, `presentAddress`, `parmanentAddress`, `perPhoto`, `admitDate`, `isActive`) VALUES
 (10, 'U0012', 'UG004', 'ChyeWennHan', 'wennhan', '01832ad', 'chyewennhan@gmail.com', 'asd', 'as', '12341', 'Male', '2023-12-07', 'O(un)', 'China', '123', '123', '123', '123', '123', '123', '123', '123', ' 123  ', '123', 'U0012.jpg', '2023-12-13', 'Y'),
-(8, 'U008', 'UG004', 'Md. Rasel', '151-15-1155', '+8801755000002', 'rasel@gmail.com', 'DIU', 'CSE', '34', 'Male', '1994-06-14', 'AB(+)', 'Bangladeshi', 'N/A', 'N/A', 'Mr. Father', '+8801722000000', 'Mst. Mother', '+8801722000005', 'Mr. Local Boy', '+8801722000001', ' Dhanmondi,Dhaka-1207 ', 'Dhanmondi,Dhaka-1207', 'U008.jpg', '2015-02-27', 'Y'),
-(9, 'U009', 'UG004', 'Md Zahidul', '151-15-1122', '+881722545660', 'zahidul@gmail.com', 'DIU', 'CSE', '34', 'Male', '2005-07-13', 'O(+)', 'Bangladeshi', 'N/A', 'N/A', 'Mr. Father', 'Mst Mother', '+8801710565958', '+8801710565958', 'Mr Local boy', '+8801710565960', ' Dhanmondi,Dhaka-1207', ' Dhanmondi,Dhaka-1207', 'U009.jpg', '2015-02-27', 'Y');
+(8, 'U008', 'UG004', 'michealJohnson', '151-15-1155', '+8801755000002', 'rasel@gmail.com', 'DIU', 'CSE', '34', 'Male', '1994-06-14', 'AB(+)', 'Bangladeshi', 'N/A', 'N/A', 'Mr. Father', '+8801722000000', 'Mst. Mother', '+8801722000005', 'Mr. Local Boy', '+8801722000001', ' Dhanmondi,Dhaka-1207 ', 'Dhanmondi,Dhaka-1207', 'U008.jpg', '2015-02-27', 'Y'),
+(9, 'EMP003', 'UG004', 'frerauhui', '151-15-1122', '+881722545660', 'zahidul@gmail.com', 'DIU', 'CSE', '34', 'Male', '2005-07-13', 'O(+)', 'Bangladeshi', 'N/A', 'N/A', 'Mr. Father', 'Mst Mother', '+8801710565958', '+8801710565958', 'Mr Local boy', '+8801710565960', ' Dhanmondi,Dhaka-1207', ' Dhanmondi,Dhaka-1207', 'U009.jpg', '2015-02-27', 'Y');
 
 -- --------------------------------------------------------
 
@@ -557,11 +556,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`serial`, `userId`, `userGroupId`, `name`, `loginId`, `password`, `verifyCode`, `expireDate`, `isVerifed`) VALUES
-(10, 'U008', 'UG004', 'Md. Rasel', 'student', '513b098ff55b4f375d6210a5f45996dd', 'vhms2115', '2115-01-04', 'Y'),
-(14, 'EMP003', 'UG003', 'Mr. Sabbir Alam', 'employee', '513b098ff55b4f375d6210a5f45996dd', 'vhms2115', '2115-01-04', 'Y'),
+(10, 'U008', 'UG004', 'michealJohnson', 'michealJohnson', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y'),
+(14, 'EMP003', 'UG003', 'frerauhui', 'frerauhui', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y'),
 (16, 'U0012', 'UG004', 'ChyeWennHan', 'wennhan', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y'),
-(17, 'EMP005', 'UG003', 'ChyeWennHan', '01832ad', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y'),
-(18, 'EMP006', 'UG003', 'ChyeWennHan', '123', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y'),
 (19, 'U0013', 'UG001', '123', 'admin', '1efcf825d090a4cffb33c3c5238610bb', 'vhms2115', '2115-01-04', 'Y');
 
 --
