@@ -6,7 +6,7 @@
  * Date: 1/4/15
  * Time: 2:04 AM
  */
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 
 $ses = new \sessionManager\sessionManager();
 //$ses->start();
@@ -172,11 +172,11 @@ $name = $ses->Get("name");
                                     <a href="<?php echo $base_url . 'ui/studentManage/studentlist.php' ?>">Student List</a>
                                 </li>
 
-                                <li>
+                                <!-- <li>
                                     <a href="<?php echo $base_url . 'ui/studentManage/deposit.php' ?>">Deposit</a>
-                                </li>
+                                </li> -->
                                 <li>
-                                    <a href="<?php echo $base_url . 'ui/studentManage/seatalocation.php' ?>">Seat Alocation</a>
+                                    <a href="<?php echo $base_url . 'ui/studentManage/seatalocation.php' ?>">Room location</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -187,12 +187,15 @@ $name = $ses->Get("name");
                                 <li>
                                     <a href="<?php echo $base_url . 'ui/stdpayment/add.php' ?>">Add</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="<?php echo $base_url . 'ui/stdpayment/approvallist.php' ?>">Approval List</a>
-                                </li>
+                                </li> -->
 
                                 <li>
                                     <a href="<?php echo $base_url . 'ui/stdpayment/view.php' ?>">View</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $base_url . 'ui/stdpayment/viewAll.php' ?>">ViewAll</a>
                                 </li>
 
                             </ul>
@@ -269,15 +272,15 @@ $name = $ses->Get("name");
 
                             <a href="#"><i class="fa fa-gears fa-fw"></i>Setup<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
+                                <!-- <li>
                                     <a href="<?php echo $base_url . 'ui/setup/fees.php' ?>">Fees</a>
-                                </li>
-                                <li>
+                                </li> -->
+                                <!-- <li>
                                     <a href="<?php echo $base_url . 'ui/setup/mealrate.php' ?>">Meal Rate</a>
-                                </li>
-                                <li>
+                                </li> -->
+                                <!-- <li>
                                     <a href="<?php echo $base_url . 'ui/setup/timeset.php' ?>">Time Set</a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <a href="<?php echo $base_url . 'ui/setup/block.php' ?>">Blocks</a>
                                 </li>

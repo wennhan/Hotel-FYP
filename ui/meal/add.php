@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['title'] = "Meal-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -97,7 +97,7 @@ function getData()
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-info-circle fa-fw"></i>Student Meal[ToDay]
+                    <i class="fa fa-info-circle fa-fw"></i>Add Meal[ToDay]
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -106,7 +106,7 @@ function getData()
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="col-lg-4">
+                                <div class="col-lg-4" style="display:none;">
                                     <div class="form-group">
                                         <label>Student Name</label>
                                         <select class="form-control" name="person" required="">
@@ -117,7 +117,7 @@ function getData()
                                 </div>
 
 
-                                <div class="col-lg-4">
+                                <!-- <div class="col-lg-4">
                                     <div class="form-group ">
                                         <label>Total ordered</label>
                                         <div class="input-group">
@@ -126,7 +126,7 @@ function getData()
                                             <input type="text" placeholder="No Of Meal" class="form-control" name="noOfMeal" required>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>

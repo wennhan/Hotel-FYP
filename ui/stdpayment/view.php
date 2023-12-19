@@ -8,7 +8,7 @@
  */
 
 $GLOBALS['title'] = "Payment-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -82,6 +82,7 @@ if ($ses->isExpired()) {
                     'paymentBy' => $_POST['paidby'],
                     'transNo' => $_POST['transno'],
                     'amount' => floatval($_POST['amount']),
+                    'status' => $_POST['status'],
                     'remark' => $_POST['remark'],
                     'isApprove' => "Yes",
 
@@ -129,9 +130,9 @@ function getTableData($logGRP, $userId, $db)
         $handyCam = new \handyCam\handyCam();
         $data = array();
         if ($logGRP === "UG004") {
-            $query = "SELECT a.serial,b.name,a.transDate,a.paymentBy ,a.transNo,a.amount,a.remark,a.isApprove FROM stdpayment as a,studentinfo as b where a.userId='" . $userId . "' and a.userId=b.userId and b.isActive='Y'";
+            $query = "SELECT a.serial,b.name,a.transDate,a.paymentBy ,a.transNo,a.amount,a.remark,a.isApprove, a.status FROM stdpayment as a,studentinfo as b where a.userId='" . $userId . "' and a.userId=b.userId and b.isActive='Y'";
         } else {
-            $query = "SELECT a.serial,b.name,a.transDate,a.paymentBy ,a.transNo,a.amount,a.remark FROM stdpayment as a,studentinfo as b where a.userId='" . $userId . "' and a.userId=b.userId and a.isApprove='Yes' and b.isActive='Y'";
+            $query = "SELECT a.serial,b.name,a.transDate,a.paymentBy ,a.transNo,a.amount,a.remark , a.status FROM stdpayment as a,studentinfo as b where a.userId='" . $userId . "' and a.userId=b.userId and a.isApprove='Yes' and b.isActive='Y'";
         }
         //  var_dump($query);
         $result = $db->getData($query);
@@ -147,13 +148,13 @@ function getTableData($logGRP, $userId, $db)
                                             <th>Name</th>
                                              <th>Payment Date</th>
                                              <th>Paid By</th>
-                                             <th>Transection/Mobile No</th>
                                              <th>Amount</th>
+                                             <th>Status</th>
                                              <th>Remark</th>';
             if ($logGRP !== "UG004") {
                 $GLOBALS['output'] .=  '<th > Action</th >';
             } else {
-                $GLOBALS['output'] .= ' <th>Is Approve</th>';
+                $GLOBALS['output'] .= ' <th>Pay</th>';
             }
 
 
@@ -169,15 +170,27 @@ function getTableData($logGRP, $userId, $db)
                 $GLOBALS['output'] .= "<td>" . $handyCam->getAppDate($row['transDate']) . "</td>";
 
                 $GLOBALS['output'] .= "<td>" . $row['paymentBy'] . "</td>";
-                $GLOBALS['output'] .= "<td>" . $row['transNo'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['amount'] . "</td>";
+                $GLOBALS['output'] .= "<td>" . $row['status'] . "</td>";
+
                 $GLOBALS['output'] .= "<td>" . $row['remark'] . "</td>";
 
                 if ($logGRP !== "UG004") {
                     $GLOBALS['output'] .= "<td><a title='Edit' class='btn btn-success btn-circle editBtn' href='#" . $row['serial'] . "'><i class='fa fa-pencil'></i></a>&nbsp&nbsp<a title='Delete' class='btn btn-danger btn-circle' href='view.php?id=" . $row['serial'] . "&wtd=delete'" . "><i class='fa fa-trash-o'></i></a></td>";
                 } else {
-                    $GLOBALS['output'] .= "<td>" . $row['isApprove'] . "</td>";
+                    if ($logGRP === "UG004") {
+                        if ($row['status'] == "Unpaid") {
+                            $GLOBALS['output'] .= "<td>
+                           
+                            <button class='btn btn-primary payButton' data-serial='" . $row['serial'] . "'>Pay</button>
+                        </td>";
+                        } else {
+                            $GLOBALS['output'] .= "<td></td>";
+                        }
+                    }
                 }
+
+
 
                 $GLOBALS['output'] .= "</tr>";
             }
@@ -389,7 +402,7 @@ if ($loginGrp === "UG004") {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <!-- <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Paid By</label>
                                             <select id="payby" class="form-control" name="paidby" required="">
@@ -399,8 +412,8 @@ if ($loginGrp === "UG004") {
                                                 <option value="Bkash">BKash</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4">
                                         <div class="form-group ">
                                             <label>Transection/Mobile No</label>
                                             <div class="input-group">
@@ -408,6 +421,17 @@ if ($loginGrp === "UG004") {
                                                 <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i> </span>
                                                 <input id="transno" type="text" placeholder="Transecton or Mobile no" class="form-control" name="transno" required>
                                             </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <select id="status" class="form-control" name="status" required="">
+
+                                                <option value="Paid">Paid</option>
+                                                <option value="Unpaid">Unpaid</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -481,20 +505,64 @@ if ($loginGrp === "UG004") {
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
     $(document).ready(function() {
+        // other existing code
+
+        // Handle Pay button click
+        $('.payButton').on('click', function() {
+            var serial = $(this).data('serial');
+            updatePaymentStatus(serial);
+        });
+
+        function updatePaymentStatus(serial) {
+            $.ajax({
+                type: 'POST',
+                url: 'updatePayStatus.php',
+                data: {
+                    'orderId': serial,
+                    'newStatus': 'Paid'
+                },
+                success: function(response) {
+                    if (response === 'success') {
+                        alert('Payment status updated successfully.');
+                        location.reload();
+                    } else {
+                        alert('Failed to update payment status.');
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                    alert('Error during AJAX call.');
+                }
+            });
+        }
+
+    });
+
+    $(document).ready(function() {
 
         $('#paymentList').dataTable();
         $('.editBtn').on('click', function() {
-
             $('#divview').hide();
             $('#editpayment').show();
 
             var serial = $(this).attr('href').substring(1);
 
-            $('#paydate').val($(this).closest("tr").find("td").eq('1').text());
-            $('#payby').val($(this).closest("tr").find("td").eq('2').text());
-            $('#transno').val($(this).closest("tr").find("td").eq('3').text());
-            $('#amount').val($(this).closest("tr").find("td").eq('4').text());
-            $('#remark').val($(this).closest("tr").find("td").eq('5').text());
+            // Extracting data from the table row
+            var paymentDate = $(this).closest("tr").find("td").eq(1).text();
+            var paidBy = $(this).closest("tr").find("td").eq(2).text();
+            var transNo = $(this).closest("tr").find("td").eq(3).text();
+            var amount = $(this).closest("tr").find("td").eq(3).text();
+            var status = $(this).closest("tr").find("td").eq(4).text(); // Extracting the status
+
+            var remark = $(this).closest("tr").find("td").eq(5).text(); // Assuming remark is in the sixth column
+
+            // Populating the form fields with extracted data
+            $('#paydate').val(paymentDate);
+            $('#payby').val(paidBy);
+            $('#transno').val(transNo);
+            $('#amount').val(amount);
+            $('#status').val(status); // Setting the value for the status field
+            $('#remark').val(remark);
 
             $.ajax({
                 type: 'POST',
@@ -510,13 +578,6 @@ if ($loginGrp === "UG004") {
                     alert('Error');
                 }
             });
-
         });
-
-        $("select option").filter(function() {
-
-            return $(this).val() == '<?php echo $uid = $ses->Get("UserIddrp"); ?>';
-        }).prop('selected', true);
-
     });
 </script>

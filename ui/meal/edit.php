@@ -9,7 +9,7 @@
 
 
 $GLOBALS['title'] = "Mealt-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
 require('./../../inc/handyCam.php');
@@ -162,7 +162,7 @@ function formRender($data)
 
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <div class="col-lg-4">
+                                            <!-- <div class="col-lg-4">
                                                 <div class="form-group ">
                                                     <label>&nbsp;</label>
                                                     <div class="input-group">
@@ -171,7 +171,7 @@ function formRender($data)
                                                         <input type="text" placeholder="" class="form-control" name="" value="<?php echo $data[0]; ?>" readonly>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-lg-4">
                                                 <div class="form-group ">
                                                     <label>No Of Meal</label>

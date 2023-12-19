@@ -1,6 +1,9 @@
 <?php
 
-$GLOBALS['title'] = "Employe-HMS";
+?>
+<?php
+
+$GLOBALS['title'] = "Payment-HMS";
 $base_url = "http://localhost:8081/hms/";
 $GLOBALS['output'] = '';
 $GLOBALS['isData'] = "";
@@ -22,43 +25,40 @@ if ($ses->isExpired()) {
     if ($msg = "true") {
         $handyCam = new \handyCam\handyCam();
         $data = array();
-        $result = $db->getData("SELECT * FROM employee where isActive='Y'");
+        $query = "SELECT a.serial,b.name,a.transDate,a.paymentBy ,a.transNo,a.amount,a.remark , a.status FROM stdpayment as a,studentinfo as b where a.userId=b.userId and a.isApprove='Yes' and b.isActive='Y'";
+        $result = $db->getData($query);
+        // $result = $db->getData("SELECT * FROM payment");
         $GLOBALS['output'] = '';
         if ($result !== false) {
 
             $GLOBALS['output'] .= '<div class="table-responsive">
-                                <table id="empList" class="table table-striped table-bordered table-hover">
+                                <table id="paymentList" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Photo</th>
-                                            <th>Name</th>
-                                            <th>Gender</th>
-                                             <th>Employee Type</th>
-                                            <th>Designation</th>
-                                            <th>Join Date</th>
-                                             <th>Salary</th>
-                                             <th>Block No</th>
-                                             <th>Address</th>
 
-                                              <th>Action</th>
-
+                                        <th>Name</th>
+                                        <th>Payment Date</th>
+                                        <th>Paid By</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Remark</th>
                                         </tr>
                                     </thead>
                                     <tbody>';
-
             while ($row = $result->fetch_array()) {
                 $GLOBALS['isData'] = "1";
                 $GLOBALS['output'] .= "<tr>";
-                $GLOBALS['output'] .= "<td><img class='perPhoto' src='./../../files/photos/" . $row['perPhoto'] . "'" . "</td>";
+
                 $GLOBALS['output'] .= "<td>" . $row['name'] . "</td>";
-                $GLOBALS['output'] .= "<td>" . $row['gender'] . "</td>";
-                $GLOBALS['output'] .= "<td>" . $row['empType'] . "</td>";
-                $GLOBALS['output'] .= "<td>" . $row['designation'] . "</td>";
-                $GLOBALS['output'] .= "<td>" . $handyCam->getAppDate($row['doj']) . "</td>";
-                $GLOBALS['output'] .= "<td>" . $row['salary'] . "</td>";
-                $GLOBALS['output'] .= "<td>" . $row['blockNo'] . "</td>";
-                $GLOBALS['output'] .= "<td>" . $row['address'] . "</td>";
-                $GLOBALS['output'] .= "<td><a title='Edit' class='btn btn-success btn-circle' href='edit.php?id=" . $row['empId'] . "&wtd=edit'" . "><i class='fa fa-pencil'></i></a>&nbsp&nbsp<a title='Delete' class='btn btn-danger btn-circle' href='edit.php?id=" . $row['empId'] . "&wtd=delete'" . "><i class='fa fa-trash-o'></i></a></td>";
+                $GLOBALS['output'] .= "<td>" . $handyCam->getAppDate($row['transDate']) . "</td>";
+
+                $GLOBALS['output'] .= "<td>" . $row['paymentBy'] . "</td>";
+                $GLOBALS['output'] .= "<td>" . $row['amount'] . "</td>";
+
+                $GLOBALS['output'] .= "<td>" . $row['status'] . "</td>";
+                $GLOBALS['output'] .= "<td>" . $row['remark'] . "</td>";
+
+                // $GLOBALS['output'] .= "<td><a title='Edit' class='btn btn-success btn-circle' href='edit.php?id=" . $row['serial'] . "&wtd=edit'" . "><i class='fa fa-pencil'></i></a>&nbsp&nbsp<a title='Delete' class='btn btn-danger btn-circle' href='edit.php?id=" . $row['serial'] . "&wtd=delete'" . "><i class='fa fa-trash-o'></i></a></td>";
                 $GLOBALS['output'] .= "</tr>";
             }
 
@@ -78,7 +78,7 @@ if ($ses->isExpired()) {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Employee List</h1>
+            <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Payment View</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -87,7 +87,7 @@ if ($ses->isExpired()) {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-info-circle fa-fw"></i> Hostel Employee List View
+                    <i class="fa fa-info-circle fa-fw"></i> Hostel Payment List View
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -120,6 +120,6 @@ if ($ses->isExpired()) {
 
 
 
-        $('#empList').dataTable();
+        $('#paymentList').dataTable();
     });
 </script>

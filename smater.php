@@ -6,7 +6,7 @@
  * Date: 1/4/15
  * Time: 2:04 AM
  */
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 
 $ses = new \sessionManager\sessionManager();
 //$ses->start();
@@ -94,9 +94,9 @@ $name = $ses->Get("name");
                         <li>
                             <a href="<?php echo $base_url . 'ui/attendence/view.php' ?>"><i class="fa fa-file-text-o fa-fw"></i> Attendence View</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="<?php echo $base_url . 'ui/stdpayment/add.php' ?>"><i class="fa fa-money fa-fw"></i> Payment Add</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="<?php echo $base_url . 'ui/meal/studentView.php' ?>"><i class="fa fa-money fa-fw"></i> Order</a>
                         </li>

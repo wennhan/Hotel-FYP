@@ -7,7 +7,7 @@
  * Time: 7:39 PM
  */
 $GLOBALS['title'] = "Bill-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 $GLOBALS['output'] = '';
 $GLOBALS['isData'] = "0";
 require('./../../inc/sessionManager.php');
@@ -294,7 +294,7 @@ function LoadData($billId)
                         <div class="col-lg-12">
                             <div class="col-lg-6">
                                 <form action="single.php" method="post" enctype="multipart/form-data">
-                                    <button class="btn btn-info" type="submit" name="btnPrint"><i class="fa fa-print">Print</i></button>
+                                    <!-- <button class="btn btn-info" type="submit" name="btnPrint"><i class="fa fa-print">Print</i></button> -->
                                 </form>
                             </div>
 

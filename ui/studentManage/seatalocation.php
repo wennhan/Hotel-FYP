@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['title'] = "Seat-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -37,7 +37,7 @@ if ($ses->isExpired()) {
 
                 if ($result >= 0) {
 
-                    echo '<script type="text/javascript"> alert("Seat Alocation Successfull.");</script>';
+                    echo '<script type="text/javascript"> alert("Room location Successfull.");</script>';
                     getData();
                 } else {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
@@ -142,7 +142,7 @@ function getData()
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Seat Alocation</h1>
+            <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Room location</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -151,7 +151,7 @@ function getData()
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-info-circle fa-fw"></i>Student's Seat Alocation
+                    <i class="fa fa-info-circle fa-fw"></i>Student's Room location
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">

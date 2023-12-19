@@ -4,7 +4,7 @@
 <?php
 
 $GLOBALS['title'] = "Bill-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 $GLOBALS['output'] = '';
 $GLOBALS['isData'] = "";
 

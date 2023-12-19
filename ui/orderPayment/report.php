@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['title'] = "Meal-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 $GLOBALS['output'] = '';
 $GLOBALS['isData'] = "";
 require('./../../inc/sessionManager.php');
@@ -147,7 +147,7 @@ if ($ses->isExpired()) {
 
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost/hms/ui/orderpayment/updateStatus.php',
+                url: 'http://localhost:8081/hms/ui/orderpayment/updateStatus.php',
                 data: {
                     orderId: orderId,
                     newStatus: newStatus

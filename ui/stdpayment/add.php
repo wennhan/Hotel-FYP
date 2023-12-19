@@ -8,7 +8,7 @@
  */
 
 $GLOBALS['title'] = "Payment-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -47,10 +47,11 @@ if ($ses->isExpired()) {
                 $data = array(
                     'userId' => $userId,
                     'transDate' => $handyCam->parseAppDate($_POST['paydate']),
-                    'paymentBy' => $_POST['paidby'],
-                    'transNo' => $_POST['transno'],
+                    'paymentBy' => "",
+                    'transNo' => "",
                     'amount' => floatval($_POST['amount']),
                     'remark' => $_POST['remark'],
+                    'status' => "Unpaid",
                     'isApprove' => $isApprove,
 
 
@@ -157,7 +158,7 @@ if ($loginGrp === "UG004") {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <!-- <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Paid By</label>
                                         <select class="form-control" name="paidby" required="">
@@ -167,14 +168,14 @@ if ($loginGrp === "UG004") {
                                             <option value="Bkash">BKash</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-12">
 
-                                <div class="col-lg-4">
+                                <!-- <div class="col-lg-4">
                                     <div class="form-group ">
                                         <label>Transection/Mobile No</label>
                                         <div class="input-group">
@@ -183,7 +184,7 @@ if ($loginGrp === "UG004") {
                                             <input type="text" placeholder="Transecton or Mobile no" class="form-control" name="transno" required>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-4">
                                     <div class="form-group ">
                                         <label>Amount</label>

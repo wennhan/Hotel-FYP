@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['title'] = "Meal-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 $GLOBALS['output'] = '';
 $GLOBALS['isData'] = "";
 require('./../../inc/sessionManager.php');
@@ -37,7 +37,6 @@ if ($ses->isExpired()) {
                                         <tr>
 
                                         <th>Image</th>
-                                            <th>Name</th>
                                             <th>Title</th>
                                             <th>Unit Price</th>
                                             <th>Status</th>
@@ -52,7 +51,6 @@ if ($ses->isExpired()) {
                 $GLOBALS['isData'] = "1";
                 $GLOBALS['output'] .= "<tr>";
                 $GLOBALS['output'] .= "<td> <img src='./../../files/photos/" . $row['photo'] . "' alt='Avatar' height='100px' class='img-responsive img-rounded proimg'> </td>";
-                $GLOBALS['output'] .= "<td>" . $row['name'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['title'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['unitPrice'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['status'] . "</td>";

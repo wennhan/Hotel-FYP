@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['title'] = "Seat-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -107,7 +107,7 @@ if (isset($_GET['id']) && $_GET['wtd']) {
                 if ($result === "true") {
 
                     //  $db->close();
-                    echo '<script type="text/javascript"> alert("Seat Alocation Updated Successfully.");
+                    echo '<script type="text/javascript"> alert("Room location Updated Successfully.");
                                 window.location.href = "seatalocation.php";
                         </script>';
                     // header("location: block.php");
@@ -139,7 +139,7 @@ function formRender($data)
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-info-circle fa-fw"></i>Update Student Seat Alocation[<?php echo $GLOBALS['userId']; ?>]
+                        <i class="fa fa-info-circle fa-fw"></i>Update Student Room location[<?php echo $GLOBALS['userId']; ?>]
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">

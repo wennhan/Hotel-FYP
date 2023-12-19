@@ -4,7 +4,7 @@ $page_name = "DashBoard";
 require('./../../inc/sessionManager.php');
 require('./../../inc/handyCam.php');
 require('./../../inc/dbPlayer.php');
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 $ses = new \sessionManager\sessionManager();
 
 $ses->start();

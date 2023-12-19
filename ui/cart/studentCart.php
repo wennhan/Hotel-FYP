@@ -4,7 +4,7 @@
 <?php
 
 $GLOBALS['title'] = "Bill-HMS";
-$base_url = "http://localhost/hms/";
+$base_url = "http://localhost:8081/hms/";
 $GLOBALS['output'] = '';
 $GLOBALS['isData'] = "";
 
@@ -171,7 +171,7 @@ if ($loginGrp === "UG004") {
 
                     <div class="row">
                         <div class="col-lg-12 text-right">
-                            <form action="http://localhost/hms/ui/meal/studentView.php">
+                            <form action="http://localhost:8081/hms/ui/meal/studentView.php">
                                 <button type="submit" class="btn btn-primary">
                                     Back
                                 </button>
@@ -242,7 +242,7 @@ if ($loginGrp === "UG004") {
                     <!-- /.modal -->
 
 
-                    <form action="http://localhost/hms/ui/cart/studentCart.php" method="post">
+                    <form action="http://localhost:8081/hms/ui/cart/studentCart.php" method="post">
                         <div class="text-info text-right"><label>Total Payment: </label> <span id="totalPayment"><?php echo $totalPayment; ?></span></div>
 
                         <div class="row">
@@ -280,7 +280,7 @@ if ($loginGrp === "UG004") {
             // Make an AJAX call to delete the item
             $.ajax({
                 type: "POST",
-                url: "http://localhost/hms/ui/cart/deleteCart.php",
+                url: "http://localhost:8081/hms/ui/cart/deleteCart.php",
                 data: {
                     serial: serial
                 },
@@ -315,7 +315,7 @@ if ($loginGrp === "UG004") {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost/hms/ui/meal/studentView.php",
+            url: "http://localhost:8081/hms/ui/meal/studentView.php",
             data: {
                 serial: serial,
                 quantity: quantity,
