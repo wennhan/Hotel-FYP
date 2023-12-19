@@ -1,7 +1,7 @@
 <?php
 
-$GLOBALS['title']="Cost-HMS";
-$base_url="http://localhost:8081/hms/";
+$GLOBALS['title'] = "Cost-HMS";
+$base_url = "http://localhost/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -9,14 +9,9 @@ require('./../../inc/dbPlayer.php');
 
 $ses = new \sessionManager\sessionManager();
 $ses->start();
-if($ses->isExpired())
-{
-    header( 'Location:'.$base_url.'login.php');
-
-
-}
-else
-{
+if ($ses->isExpired()) {
+    header('Location:' . $base_url . 'login.php');
+} else {
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -33,37 +28,27 @@ else
                 $data = array(
                     'type' => $_POST['type'],
                     'amount' => floatval($_POST['amount']),
-                    'date' =>date("Y-m-d"),
+                    'date' => date("Y-m-d"),
 
                     'description' => $_POST['description']
 
                 );
-                $result = $db->insertData("cost",$data);
+                $result = $db->insertData("cost", $data);
 
-                if($result>=0)
-                {
+                if ($result >= 0) {
 
                     //  $db->close();
                     echo '<script type="text/javascript"> alert("Cost Added Successfully.");</script>';
-                }
-                elseif(strpos($result,'Duplicate') !== false)
-                {
+                } elseif (strpos($result, 'Duplicate') !== false) {
                     echo '<script type="text/javascript"> alert("Cost Already Exits!");</script>';
-                }
-                else
-                {
+                } else {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
-
-            }
-            else
-            {
+            } else {
                 echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
             }
         }
     }
-
-
 }
 
 ?>
@@ -84,7 +69,7 @@ else
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <form name="bill" action="add.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
+                    <form name="bill" action="add.php" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 
 
                         <div class="row">
@@ -132,7 +117,7 @@ else
                                 <div class="col-lg-5"></div>
                                 <div class="col-lg-2">
                                     <div class="form-group ">
-                                        <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
+                                        <button type="submit" class="btn btn-success" name="btnSave"><i class="fa fa-2x fa-check"></i>Save</button>
                                     </div>
 
                                 </div>
@@ -154,12 +139,9 @@ else
 
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function() {
 
 
 
     });
-
-
-
 </script>

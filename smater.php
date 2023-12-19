@@ -1,15 +1,16 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: troot
  * Date: 1/4/15
  * Time: 2:04 AM
  */
-$base_url="http://localhost:8081/hms/";
+$base_url = "http://localhost/hms/";
 
 $ses = new \sessionManager\sessionManager();
 //$ses->start();
-$name=$ses->Get("name");
+$name = $ses->Get("name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,33 +23,32 @@ $name=$ses->Get("name");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?php echo $GLOBALS['title'];?></title>
+    <title><?php echo $GLOBALS['title']; ?></title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?php echo $base_url;?>dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo $base_url;?>dist/css/datepicker.css" rel="stylesheet">
+    <link href="<?php echo $base_url; ?>dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo $base_url; ?>dist/css/datepicker.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="<?php echo $base_url;?>dist/css/metisMenu.min.css" rel="stylesheet">
+    <link href="<?php echo $base_url; ?>dist/css/metisMenu.min.css" rel="stylesheet">
 
     <!-- Timeline CSS -->
-    <link href="<?php echo $base_url;?>dist/css/timeline.css" rel="stylesheet">
+    <link href="<?php echo $base_url; ?>dist/css/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="<?php echo $base_url;?>dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="<?php echo $base_url; ?>dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="<?php echo $base_url;?>dist/css/morris.css" rel="stylesheet">
+    <link href="<?php echo $base_url; ?>dist/css/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<?php echo $base_url;?>dist/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $base_url;?>dist/css/dataTable.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $base_url;?>dist/css/timepicker.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $base_url;?>dist/css/calendar.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $base_url;?>dist/css/custom_2.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $base_url;?>dist/css/app.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $base_url; ?>dist/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $base_url; ?>dist/css/dataTable.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $base_url; ?>dist/css/timepicker.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $base_url; ?>dist/css/calendar.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $base_url; ?>dist/css/custom_2.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $base_url; ?>dist/css/app.css" rel="stylesheet" type="text/css">
     <style>
-
         #page-wrapper {
             border-left: 1px solid #e7e7e7;
             margin: 0 0 0 0px;
@@ -62,58 +62,58 @@ $name=$ses->Get("name");
 
 <body>
 
-<div id="wrapper">
+    <div id="wrapper">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <img alt="HMS" class="pull-left" src="<?php echo $base_url.'site/images/logo.png'?>" width="50px"><a class="navbar-brand titlehms" href="<?php echo $base_url.'sdashboard.php'?>">Hostel Management System</a>
-        </div>
-        <!-- /.navbar-header -->
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img alt="HMS" class="pull-left" src="<?php echo $base_url . 'site/images/logo.png' ?>" width="50px"><a class="navbar-brand titlehms" href="<?php echo $base_url . 'sdashboard.php' ?>">Hostel Management System</a>
+            </div>
+            <!-- /.navbar-header -->
 
-        <ul class="nav navbar-top-links navbar-right">
+            <ul class="nav navbar-top-links navbar-right">
 
-            <li>
-                <h5 class="titlehms"><?php echo $name?></h5>
-            </li>
+                <li>
+                    <h5 class="titlehms"><?php echo $name ?></h5>
+                </li>
 
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-bars fa-fw"></i> Menu <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="<?php echo $base_url;?>ui/usr/profile.php"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $base_url.'ui/attendence/view.php'?>"><i class="fa fa-file-text-o fa-fw"></i> Attendence View</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $base_url.'ui/stdpayment/add.php'?>"><i class="fa fa-money fa-fw"></i> Payment Add</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $base_url.'ui/meal/studentView.php'?>"><i class="fa fa-money fa-fw"></i> Order</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $base_url.'ui/stdpayment/view.php'?>"><i class="fa fa-money fa-fw"></i> Payment view</a>
-                        <a href="<?php echo $base_url.'ui/bill/view.php'?>"><i class="fa fa-money fa-fw"></i>Bill view</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="<?php echo $base_url;?>logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
-            <!-- /.dropdown -->
-        </ul>
-        <!-- /.navbar-top-links -->
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bars fa-fw"></i> Menu <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="<?php echo $base_url; ?>ui/usr/profile.php"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url . 'ui/attendence/view.php' ?>"><i class="fa fa-file-text-o fa-fw"></i> Attendence View</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url . 'ui/stdpayment/add.php' ?>"><i class="fa fa-money fa-fw"></i> Payment Add</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url . 'ui/meal/studentView.php' ?>"><i class="fa fa-money fa-fw"></i> Order</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url . 'ui/stdpayment/view.php' ?>"><i class="fa fa-money fa-fw"></i> Payment view</a>
+                            <a href="<?php echo $base_url . 'ui/bill/view.php' ?>"><i class="fa fa-money fa-fw"></i>Bill view</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="<?php echo $base_url; ?>logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
 
 
-        <!-- /.navbar-static-side -->
-    </nav>
+            <!-- /.navbar-static-side -->
+        </nav>

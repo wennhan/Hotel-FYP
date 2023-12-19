@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: troot
@@ -7,88 +8,72 @@
  */
 
 
-$GLOBALS['title']="Block-HMS";
-$base_url="http://localhost:8081/hms/";
+$GLOBALS['title'] = "Block-HMS";
+$base_url = "http://localhost/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
-$GLOBALS['blockId']='';
+$GLOBALS['blockId'] = '';
 
 if (isset($_GET['id']) && $_GET['wtd']) {
     $ses = new \sessionManager\sessionManager();
     $ses->start();
-    $ses->Set("BlockIdlFor",$_GET['id']);
-    $GLOBALS['blockId']=$ses->Get("BlockIdlFor");
+    $ses->Set("BlockIdlFor", $_GET['id']);
+    $GLOBALS['blockId'] = $ses->Get("BlockIdlFor");
 
     $db = new \dbPlayer\dbPlayer();
     $msg = $db->open();
-    if($_GET['wtd']==="edit")
-    {
+    if ($_GET['wtd'] === "edit") {
 
 
 
         if ($msg = "true") {
 
             $data = array();
-            $result = $db->getData("SELECT * FROM blocks where blockId='".$GLOBALS['blockId']."'");
+            $result = $db->getData("SELECT * FROM blocks where blockId='" . $GLOBALS['blockId'] . "'");
             // var_dump($result);
-            if ($result !== false)
-            {
+            if ($result !== false) {
                 $data = array();
                 while ($row = $result->fetch_array()) {
-                    array_push($data,$row['blockNo']);
-                    array_push($data,$row['blockName']);
-                    array_push($data,$row['description']);
+                    array_push($data, $row['blockNo']);
+                    array_push($data, $row['blockName']);
+                    array_push($data, $row['description']);
                 }
                 // var_dump($data);
-                formRender($data[0],$data[1],$data[2]);
-            }
-            else
-            {
+                formRender($data[0], $data[1], $data[2]);
+            } else {
                 echo '<script type="text/javascript"> alert("' . $result . '");</script>';
             }
         } else {
             echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
         }
-    }
-    elseif($_GET['wtd']==="delete")
-    {
+    } elseif ($_GET['wtd'] === "delete") {
         if ($msg = "true") {
 
 
-            $result = $db->delete("delete from blocks where blockId='".$GLOBALS['blockId']."'");
+            $result = $db->delete("delete from blocks where blockId='" . $GLOBALS['blockId'] . "'");
 
-            if ($result !== false)
-            {
+            if ($result !== false) {
                 echo '<script type="text/javascript"> alert("Block Deleted Successfully.");
                                 window.location.href = "block.php";
                         </script>';
-            }
-            else
-            {
+            } else {
                 echo '<script type="text/javascript"> alert("' . $result . '");</script>';
             }
         } else {
             echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
         }
-
-    }
-    else
-    {
+    } else {
         header("location: block.php");
-
     }
-
-}
-elseif($_GET['update']=="1")
-{
+} elseif ($_GET['update'] == "1") {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST["btnUpdate"])) {
             $ses = new \sessionManager\sessionManager();
             $ses->start();
 
-            $BlockIdlFor=$ses->Get("BlockIdlFor");
+            $BlockIdlFor = $ses->Get("BlockIdlFor");
             $db = new \dbPlayer\dbPlayer();
             $msg = $db->open();
             if ($msg = "true") {
@@ -98,19 +83,19 @@ elseif($_GET['update']=="1")
 
                     'blockNo' => $_POST['blockNo'],
                     'description' => $_POST['description'],
-                    'blockName' =>$_POST['blockName']
+                    'blockName' => $_POST['blockName']
 
                 );
 
-                $result = $db->updateData("blocks", "blockId",$BlockIdlFor,$data);
+                $result = $db->updateData("blocks", "blockId", $BlockIdlFor, $data);
                 // var_dump($result);
-                if ($result==="true") {
+                if ($result === "true") {
 
                     //  $db->close();
                     echo '<script type="text/javascript"> alert("Block Updated Successfully.");
                                 window.location.href = "block.php";
                         </script>';
-                   // header("location: block.php");
+                    // header("location: block.php");
 
                 } else {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
@@ -120,12 +105,10 @@ elseif($_GET['update']=="1")
             }
         }
     }
-}
-else
-{
+} else {
     header("location: block.php");
 }
-function formRender($blockNo,$blockName,$desc)
+function formRender($blockNo, $blockName, $desc)
 { ?>
 
     <?php include('./../../master.php'); ?>
@@ -147,7 +130,7 @@ function formRender($blockNo,$blockName,$desc)
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <form name="fees" action="blockaction.php?update=1"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
+                                <form name="fees" action="blockaction.php?update=1" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 
 
                                     <div class="row">
@@ -158,7 +141,7 @@ function formRender($blockNo,$blockName,$desc)
                                                     <div class="input-group">
 
                                                         <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i> </span>
-                                                        <input type="text" placeholder="Block No" class="form-control" name="blockNo" value="<?php echo $blockNo;?>" required>
+                                                        <input type="text" placeholder="Block No" class="form-control" name="blockNo" value="<?php echo $blockNo; ?>" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,7 +151,7 @@ function formRender($blockNo,$blockName,$desc)
                                                     <div class="input-group">
 
                                                         <span class="input-group-addon"><i class="fa fa-info"></i> </span>
-                                                        <input type="text" placeholder="Block Name" class="form-control" name="blockName" value="<?php echo $blockName;?>" required>
+                                                        <input type="text" placeholder="Block Name" class="form-control" name="blockName" value="<?php echo $blockName; ?>" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,7 +161,7 @@ function formRender($blockNo,$blockName,$desc)
                                                     <div class="input-group">
 
                                                         <span class="input-group-addon"><i class="fa fa-info"></i> </span>
-                                                        <textarea rows="1" placeholder="Description" class="form-control" name="description" required><?php echo $desc;?>"</textarea>
+                                                        <textarea rows="1" placeholder="Description" class="form-control" name="description" required><?php echo $desc; ?>"</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -193,7 +176,7 @@ function formRender($blockNo,$blockName,$desc)
                                             <div class="col-lg-5"></div>
                                             <div class="col-lg-2">
                                                 <div class="form-group ">
-                                                    <button type="submit" class="btn btn-success" name="btnUpdate" ><i class="fa fa-2x fa-check"></i>Update</button>
+                                                    <button type="submit" class="btn btn-success" name="btnUpdate"><i class="fa fa-2x fa-check"></i>Update</button>
                                                 </div>
 
                                             </div>
@@ -206,23 +189,15 @@ function formRender($blockNo,$blockName,$desc)
                         </div>
 
 
+                    </div>
                 </div>
+
             </div>
 
         </div>
 
-    </div>
 
 
+        <?php include('./../../footer.php'); ?>
 
-    <?php include('./../../footer.php'); ?>
-
-<?php }
-
-
-
-
-
-
-
-
+    <?php }

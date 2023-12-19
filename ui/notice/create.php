@@ -3,27 +3,22 @@
 ?>
 <?php
 
-$GLOBALS['title']="Notice-HMS";
-$base_url="http://localhost:8081/hms/";
-$GLOBALS['output']='';
-$GLOBALS['isData']="";
+$GLOBALS['title'] = "Notice-HMS";
+$base_url = "http://localhost/hms/";
+$GLOBALS['output'] = '';
+$GLOBALS['isData'] = "";
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
 
 
 $ses = new \sessionManager\sessionManager();
 $ses->start();
-$name=$ses->Get("name");
-if($ses->isExpired())
-{
-    header( 'Location:'.$base_url.'login.php');
-
-
-}
-else
-{
-    $name=$ses->Get("loginId");
-    $msg="";
+$name = $ses->Get("name");
+if ($ses->isExpired()) {
+    header('Location:' . $base_url . 'login.php');
+} else {
+    $name = $ses->Get("loginId");
+    $msg = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST["btnSave"])) {
@@ -40,19 +35,18 @@ else
                     'title' => $_POST['title'],
                     'description' => $_POST['description'],
 
-                    'createdDate' =>$dateNow=date("Y-m-d H:i:s")
+                    'createdDate' => $dateNow = date("Y-m-d H:i:s")
 
                 );
-                $result = $db->insertData("notice",$data);
+                $result = $db->insertData("notice", $data);
                 //var_dump($result);
-                if($result>=0) {
+                if ($result >= 0) {
 
 
-                   // var_dump($result);
+                    // var_dump($result);
                     //  $db->close();
                     echo '<script type="text/javascript"> alert("Notice created Successfully.");</script>';
                     getData();
-
                 } else {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
@@ -60,19 +54,9 @@ else
                 echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
             }
         }
-
-
-
-
-
-    }
-    else
-    {
+    } else {
         getData();
     }
-
-
-
 }
 function getData()
 {
@@ -83,11 +67,10 @@ function getData()
 
         $data = array();
         $result = $db->getData("SELECT * FROM notice");
-        $GLOBALS['output']='';
-        if ($result !== false)
-        {
+        $GLOBALS['output'] = '';
+        if ($result !== false) {
 
-            $GLOBALS['output'].='<div class="table-responsive">
+            $GLOBALS['output'] .= '<div class="table-responsive">
                                 <table id="noticeList" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -100,32 +83,26 @@ function getData()
                                         </tr>
                                     </thead>
                                     <tbody>';
-                while ($row = $result->fetch_array()) {
-                $GLOBALS['isData']="1";
+            while ($row = $result->fetch_array()) {
+                $GLOBALS['isData'] = "1";
                 $GLOBALS['output'] .= "<tr>";
 
                 $GLOBALS['output'] .= "<td>" . $row['title'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['description'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['createdDate'] . "</td>";
-                $GLOBALS['output'] .= "<td><a title='Edit' class='btn btn-success btn-circle' href='noticeaction.php?id=" . $row['serial'] ."&wtd=edit'"."><i class='fa fa-pencil'></i></a>&nbsp&nbsp<a title='Delete' class='btn btn-danger btn-circle' href='noticeaction.php?id=" . $row['serial'] ."&wtd=delete'"."><i class='fa fa-trash-o'></i></a></td>";
+                $GLOBALS['output'] .= "<td><a title='Edit' class='btn btn-success btn-circle' href='noticeaction.php?id=" . $row['serial'] . "&wtd=edit'" . "><i class='fa fa-pencil'></i></a>&nbsp&nbsp<a title='Delete' class='btn btn-danger btn-circle' href='noticeaction.php?id=" . $row['serial'] . "&wtd=delete'" . "><i class='fa fa-trash-o'></i></a></td>";
                 $GLOBALS['output'] .= "</tr>";
-
             }
 
-            $GLOBALS['output'].=  '</tbody>
+            $GLOBALS['output'] .=  '</tbody>
                                 </table>
                             </div>';
-
-
-        }
-        else
-        {
+        } else {
             echo '<script type="text/javascript"> alert("' . $result . '");</script>';
         }
     } else {
         echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
     }
-
 }
 ?>
 <?php include('./../../master.php'); ?>
@@ -147,7 +124,7 @@ function getData()
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form name="notice" action="create.php"   accept-charset="utf-8" method="post" enctype="multipart/form-data">
+                            <form name="notice" action="create.php" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 
 
                                 <div class="row">
@@ -184,7 +161,7 @@ function getData()
 
                                         <div class="col-lg-2">
                                             <div class="form-group ">
-                                                <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
+                                                <button type="submit" class="btn btn-success" name="btnSave"><i class="fa fa-2x fa-check"></i>Save</button>
                                             </div>
 
                                         </div>
@@ -198,7 +175,9 @@ function getData()
                     <div class="row">
                         <div class="col-lg-12">
                             <hr />
-                            <?php if($GLOBALS['isData']=="1"){echo $GLOBALS['output'];}?>
+                            <?php if ($GLOBALS['isData'] == "1") {
+                                echo $GLOBALS['output'];
+                            } ?>
                         </div>
                     </div>
 
@@ -216,14 +195,10 @@ function getData()
 
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function() {
 
 
 
         $('#noticeList').dataTable();
     });
-
-
-
-
 </script>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: troot
@@ -6,8 +7,8 @@
  * Time: 11:41 AM
  */
 
-$GLOBALS['title']="Payment-HMS";
-$base_url="http://localhost:8081/hms/";
+$GLOBALS['title'] = "Payment-HMS";
+$base_url = "http://localhost/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -15,17 +16,12 @@ require('./../../inc/handyCam.php');
 
 $ses = new \sessionManager\sessionManager();
 $ses->start();
-$name=$ses->Get("name");
-$loginId=$ses->Get("userIdLoged");
-$loginGrp=$ses->Get("userGroupId");
-if($ses->isExpired())
-{
-    header( 'Location:'.$base_url.'login.php');
-
-
-}
-else
-{
+$name = $ses->Get("name");
+$loginId = $ses->Get("userIdLoged");
+$loginGrp = $ses->Get("userGroupId");
+if ($ses->isExpired()) {
+    header('Location:' . $base_url . 'login.php');
+} else {
 
 
 
@@ -38,67 +34,53 @@ else
 
             if ($msg = "true") {
 
-                    $handyCam = new \handyCam\handyCam();
-                     $userId="";
-                     $isApprove="";
-                     if($loginGrp==="UG004")
-                     {
-                         $userId=$loginId;
-                         $isApprove="No";
-                     }
-                     else
-                     {
-                         $userId=$_POST['person'];
-                         $isApprove="Yes";
-                     }
-                    $data = array(
-                        'userId' => $userId,
-                        'transDate' => $handyCam->parseAppDate($_POST['paydate']),
-                        'paymentBy' => $_POST['paidby'],
-                        'transNo' => $_POST['transno'],
-                        'amount' => floatval($_POST['amount']),
-                        'remark' => $_POST['remark'],
-                        'isApprove'=>$isApprove,
+                $handyCam = new \handyCam\handyCam();
+                $userId = "";
+                $isApprove = "";
+                if ($loginGrp === "UG004") {
+                    $userId = $loginId;
+                    $isApprove = "No";
+                } else {
+                    $userId = $_POST['person'];
+                    $isApprove = "Yes";
+                }
+                $data = array(
+                    'userId' => $userId,
+                    'transDate' => $handyCam->parseAppDate($_POST['paydate']),
+                    'paymentBy' => $_POST['paidby'],
+                    'transNo' => $_POST['transno'],
+                    'amount' => floatval($_POST['amount']),
+                    'remark' => $_POST['remark'],
+                    'isApprove' => $isApprove,
 
 
-                    );
-                    $result = $db->insertData("stdpayment", $data);
+                );
+                $result = $db->insertData("stdpayment", $data);
 
-                    if (is_numeric($result)) {
+                if (is_numeric($result)) {
 
-                        //  $db->close();
-                        echo '<script type="text/javascript"> alert("Payment Added Successfully.");window.location="add.php";</script>';
-                    } elseif (strpos($result, 'Duplicate') !== false) {
-                        echo '<script type="text/javascript"> alert("Payment Already Exits!!!");window.location="add.php"; </script>';
-                        getData();
-                    } else {
-                        echo '<script type="text/javascript"> alert("' . $result . '");window.location="add.php";</script>';
-                    }
-
-
-            }
-            else
-            {
+                    //  $db->close();
+                    echo '<script type="text/javascript"> alert("Payment Added Successfully.");window.location="add.php";</script>';
+                } elseif (strpos($result, 'Duplicate') !== false) {
+                    echo '<script type="text/javascript"> alert("Payment Already Exits!!!");window.location="add.php"; </script>';
+                    getData();
+                } else {
+                    echo '<script type="text/javascript"> alert("' . $result . '");window.location="add.php";</script>';
+                }
+            } else {
                 echo '<script type="text/javascript"> alert("' . $msg . '");window.location="add.php";</script>';
             }
         }
-    }
-    else
-    {
-        if($loginGrp=="UG004"){
+    } else {
+        if ($loginGrp == "UG004") {
 
-                    $GLOBALS['output']='';
-                    $GLOBALS['isData']="1";
-                    $GLOBALS['output'] .= '<option value="'.$loginId.'">'.$name.'</option>';
-        }
-        else
-        {
+            $GLOBALS['output'] = '';
+            $GLOBALS['isData'] = "1";
+            $GLOBALS['output'] .= '<option value="' . $loginId . '">' . $name . '</option>';
+        } else {
             getData();
         }
-
     }
-
-
 }
 function getData()
 {
@@ -106,39 +88,25 @@ function getData()
     $msg = $db->open();
     $data = array();
     $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
-    $GLOBALS['output']='';
-    if ($result !== false)
-    {
+    $GLOBALS['output'] = '';
+    if ($result !== false) {
         while ($row = $result->fetch_array()) {
-            $GLOBALS['isData']="1";
-            $GLOBALS['output'] .= '<option value="'.$row['userId'].'">'.$row['name'].'</option>';
-
+            $GLOBALS['isData'] = "1";
+            $GLOBALS['output'] .= '<option value="' . $row['userId'] . '">' . $row['name'] . '</option>';
         }
-
-
-
-
-    }
-    else
-    {
+    } else {
         echo '<script type="text/javascript"> alert("' . $result . '");</script>';
     }
 }
 
-if($loginGrp==="UG004"){
+if ($loginGrp === "UG004") {
 
-include('./../../smater.php');
+    include('./../../smater.php');
+} elseif ($loginGrp === "UG003") {
 
-}
-elseif($loginGrp==="UG003")
-
-{
-
-include('./../../emaster.php');
-}
-else
-{
-include('./../../master.php');
+    include('./../../emaster.php');
+} else {
+    include('./../../master.php');
 }
 
 ?>
@@ -158,7 +126,7 @@ include('./../../master.php');
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <form name="attendence" action="add.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
+                    <form name="attendence" action="add.php" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 
 
                         <div class="row">
@@ -167,15 +135,14 @@ include('./../../master.php');
                                     <div class="form-group">
                                         <label>Student Name</label>
                                         <?php
-                                        if($loginGrp=="UG004") {
-                                          echo   '<select class="form-control" name="person" disabled required="">';
-                                        }
-                                        else{
-                                          echo  '<select class="form-control" name="person" required="">';
+                                        if ($loginGrp == "UG004") {
+                                            echo   '<select class="form-control" name="person" disabled required="">';
+                                        } else {
+                                            echo  '<select class="form-control" name="person" required="">';
                                         }
                                         ?>
 
-                                            <?php echo $GLOBALS['output'];?>
+                                        <?php echo $GLOBALS['output']; ?>
 
                                         </select>
                                     </div>
@@ -186,7 +153,7 @@ include('./../../master.php');
                                         <div class="input-group date" id='dp1'>
 
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i> </span>
-                                            <input type="text" placeholder="Payment Date" class="form-control datepicker" name="paydate" required  data-date-format="dd/mm/yyyy">
+                                            <input type="text" placeholder="Payment Date" class="form-control datepicker" name="paydate" required data-date-format="dd/mm/yyyy">
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +217,7 @@ include('./../../master.php');
                                 <div class="col-lg-5"></div>
                                 <div class="col-lg-2">
                                     <div class="form-group ">
-                                        <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
+                                        <button type="submit" class="btn btn-success" name="btnSave"><i class="fa fa-2x fa-check"></i>Save</button>
                                     </div>
 
                                 </div>
@@ -272,12 +239,9 @@ include('./../../master.php');
 
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function() {
 
         $('.datepicker').datepicker();
 
     });
-
-
-
 </script>

@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['title'] = "Meal-HMS";
-$base_url = "http://localhost:8081/hms/";
+$base_url = "http://localhost/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');

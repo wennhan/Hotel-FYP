@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: troot
@@ -7,25 +8,21 @@
  */
 
 
-$GLOBALS['title']="Meal Rate-HMS";
-$base_url="http://localhost:8081/hms/";
-$GLOBALS['rate']='';
-$GLOBALS['note']="";
+$GLOBALS['title'] = "Meal Rate-HMS";
+$base_url = "http://localhost/hms/";
+$GLOBALS['rate'] = '';
+$GLOBALS['note'] = "";
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
 
 
 $ses = new \sessionManager\sessionManager();
 $ses->start();
-$name=$ses->Get("name");
+$name = $ses->Get("name");
 
-if($ses->isExpired())
-{
-    header( 'Location:'.$base_url.'login.php');
-
-
-}
-else {
+if ($ses->isExpired()) {
+    header('Location:' . $base_url . 'login.php');
+} else {
     $msg = "";
     $db = new \dbPlayer\dbPlayer();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -52,9 +49,7 @@ else {
                     } else {
                         echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                     }
-                }
-                else
-                {
+                } else {
                     $query = "insert into mealrate VALUES(" . $rate . ",'" . $_POST['note'] . "')";
                     //var_dump($query);
                     $result = $db->execNonQuery($query);
@@ -74,7 +69,6 @@ else {
                 echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
             }
         }
-
     } else {
 
         $msg = $db->open();
@@ -88,15 +82,12 @@ else {
                 while ($row = $result->fetch_array()) {
                     array_push($data, $row['rate']);
                     array_push($data, $row['note']);
-
-
                 }
 
                 if ($result->num_rows < 1) {
                     $GLOBALS['note'] = $data[1];
                     $GLOBALS['rate'] = $data[0];
-                }
-                else{
+                } else {
                     $GLOBALS['note'] = "";
                     $GLOBALS['rate'] = "";
                 }
@@ -106,7 +97,6 @@ else {
         } else {
             echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
         }
-
     }
 }
 
@@ -115,83 +105,83 @@ else {
 ?>
 
 <?php include('./../../master.php'); ?>
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Meal Rate</h1>
-            </div>
-            <!-- /.col-lg-12 -->
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Meal Rate</h1>
         </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-info-circle fa-fw"></i> Hostel Meal Rate
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <form name="mealrate" action="mealrate.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
-
-
-                                    <div class="row">
-                                        <div class="col-lg-12">
-
-
-                                            <div class="col-lg-4">
-                                                <div class="form-group ">
-                                                    <label>Rate</label>
-                                                    <div class="input-group">
-
-                                                        <span class="input-group-addon"><i class="fa fa-money"></i> </span>
-                                                        <input type="text" placeholder="Meal Rate" class="form-control"  value="<?php echo $GLOBALS['rate'];?>" name="rate" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group ">
-                                                    <label>Note</label>
-                                                    <div class="input-group">
-
-                                                        <span class="input-group-addon"><i class="fa fa-info"></i> </span>
-                                                        <textarea rows="1" placeholder="Note" class="form-control" name="note" required><?php echo $GLOBALS['note'];?></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="col-lg-5"></div>
-                                            <div class="col-lg-2">
-                                                <div class="form-group ">
-                                                    <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-5">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                    <!-- /.panel-body -->
-                </div>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-
+        <!-- /.col-lg-12 -->
     </div>
-    <!-- /#page-wrapper -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-info-circle fa-fw"></i> Hostel Meal Rate
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="mealrate" action="mealrate.php" accept-charset="utf-8" method="post" enctype="multipart/form-data">
+
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+
+
+                                        <div class="col-lg-4">
+                                            <div class="form-group ">
+                                                <label>Rate</label>
+                                                <div class="input-group">
+
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i> </span>
+                                                    <input type="text" placeholder="Meal Rate" class="form-control" value="<?php echo $GLOBALS['rate']; ?>" name="rate" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group ">
+                                                <label>Note</label>
+                                                <div class="input-group">
+
+                                                    <span class="input-group-addon"><i class="fa fa-info"></i> </span>
+                                                    <textarea rows="1" placeholder="Note" class="form-control" name="note" required><?php echo $GLOBALS['note']; ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-5"></div>
+                                        <div class="col-lg-2">
+                                            <div class="form-group ">
+                                                <button type="submit" class="btn btn-success" name="btnSave"><i class="fa fa-2x fa-check"></i>Save</button>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-5">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+</div>
+<!-- /#page-wrapper -->
 
 
 <?php include('./../../footer.php'); ?>

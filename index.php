@@ -43,11 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["btnLogin"])) {
             $msg = "Login Id or Password Wrong!";
         } else {
             if ($info[1] == "UG004") {
-                header('Location: http://localhost:8081/hms/sdashboard.php');
+                header('Location: http://localhost/hms/sdashboard.php');
             } elseif ($info[1] == "UG003") {
-                header('Location: http://localhost:8081/hms/edashboard.php');
+                header('Location: http://localhost/hms/edashboard.php');
             } elseif ($info[1] == "UG001") {
-                header('Location: http://localhost:8081/hms/dashboard.php');
+                header('Location: http://localhost/hms/dashboard.php');
             }
         }
     }

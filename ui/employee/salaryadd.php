@@ -1,7 +1,7 @@
 <?php
 
-$GLOBALS['title']="Salary-HMS";
-$base_url="http://localhost:8081/hms/";
+$GLOBALS['title'] = "Salary-HMS";
+$base_url = "http://localhost/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -9,37 +9,24 @@ require('./../../inc/dbPlayer.php');
 
 $ses = new \sessionManager\sessionManager();
 $ses->start();
-if($ses->isExpired())
-{
-    header( 'Location:'.$base_url.'login.php');
-
-
-}
-else
-{
-    $name=$ses->Get("loginId");
-    $msg="";
+if ($ses->isExpired()) {
+    header('Location:' . $base_url . 'login.php');
+} else {
+    $name = $ses->Get("loginId");
+    $msg = "";
     $db = new \dbPlayer\dbPlayer();
     $msg = $db->open();
 
     //load student list
     $data = array();
     $result = $db->getData("SELECT empId,name FROM employee  where isActive='Y'");
-    $GLOBALS['output']='';
-    if ($result !== false)
-    {
+    $GLOBALS['output'] = '';
+    if ($result !== false) {
         while ($row = $result->fetch_array()) {
-            $GLOBALS['isData']="1";
-            $GLOBALS['output'] .= '<option value="'.$row['empId'].'">'.$row['name'].'</option>';
-
+            $GLOBALS['isData'] = "1";
+            $GLOBALS['output'] .= '<option value="' . $row['empId'] . '">' . $row['name'] . '</option>';
         }
-
-
-
-
-    }
-    else
-    {
+    } else {
         echo '<script type="text/javascript"> alert("' . $result . '");</script>';
     }
 
@@ -58,31 +45,23 @@ else
 
                     'monthyear' => $_POST['monthyear'],
                     'amount' => floatval($_POST['amount']),
-                    'addedDate' =>date("Y-m-d"),
+                    'addedDate' => date("Y-m-d"),
 
                 );
-                $result = $db->insertData("salary",$data);
+                $result = $db->insertData("salary", $data);
 
-                if($result>=0)
-                {
+                if ($result >= 0) {
 
                     //  $db->close();
                     echo '<script type="text/javascript"> alert("Salary Added Successfully.");</script>';
-                }
-                else
-                {
+                } else {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
-
-            }
-            else
-            {
+            } else {
                 echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
             }
         }
     }
-
-
 }
 
 ?>
@@ -103,7 +82,7 @@ else
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <form name="bill" action="salaryadd.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
+                    <form name="bill" action="salaryadd.php" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 
 
                         <div class="row">
@@ -112,7 +91,7 @@ else
                                     <div class="form-group">
                                         <label>Employee Name</label>
                                         <select class="form-control" name="empId" required="">
-                                            <?php echo $GLOBALS['output'];?>
+                                            <?php echo $GLOBALS['output']; ?>
 
                                         </select>
                                     </div>
@@ -150,7 +129,7 @@ else
                                 <div class="col-lg-10"></div>
                                 <div class="col-lg-2">
                                     <div class="form-group ">
-                                        <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
+                                        <button type="submit" class="btn btn-success" name="btnSave"><i class="fa fa-2x fa-check"></i>Save</button>
                                     </div>
 
                                 </div>
@@ -171,7 +150,7 @@ else
 
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function() {
         $('.datepicker').datepicker({
             format: "MM-yyyy",
             viewMode: "months",
@@ -180,5 +159,4 @@ else
 
 
     });
-
 </script>

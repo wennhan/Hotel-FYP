@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: lmx
  * Date: 2/26/2015
  * Time: 11:53 AM
  */
-$GLOBALS['title']="Attendence-HMS";
-$base_url="http://localhost:8081/hms/";
+$GLOBALS['title'] = "Attendence-HMS";
+$base_url = "http://localhost/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -14,16 +15,11 @@ require('./../../inc/handyCam.php');
 
 $ses = new \sessionManager\sessionManager();
 $ses->start();
-$name=$ses->Get("name");
+$name = $ses->Get("name");
 
-if($ses->isExpired())
-{
-    header( 'Location:'.$base_url.'login.php');
-
-
-}
-else
-{
+if ($ses->isExpired()) {
+    header('Location:' . $base_url . 'login.php');
+} else {
 
 
 
@@ -35,8 +31,8 @@ else
             $msg = $db->open();
 
             if ($msg == "true") {
-                $userIdf =$_POST['person'];
-                $result=$db->getData("SELECT * FROM attendence WHERE userId='".$userIdf."' and date=CURDATE()");
+                $userIdf = $_POST['person'];
+                $result = $db->getData("SELECT * FROM attendence WHERE userId='" . $userIdf . "' and date=CURDATE()");
                 if ($result->num_rows < 1) {
                     $handyCam = new \handyCam\handyCam();
                     $data = array(
@@ -60,26 +56,17 @@ else
                     } else {
                         echo '<script type="text/javascript"> alert("' . $result . '");window.location="add.php";</script>';
                     }
-                }
-                else
-                {
+                } else {
                     echo '<script type="text/javascript"> alert("Attendence Already Exits for today!"); </script>';
                 }
-
-            }
-            else
-            {
+            } else {
                 echo '<script type="text/javascript"> alert("' . $msg . '");window.location="add.php";</script>';
             }
         }
-    }
-    else
-    {
+    } else {
 
         getData();
     }
-
-
 }
 function getData()
 {
@@ -87,15 +74,13 @@ function getData()
     $msg = $db->open();
     $data = array();
     $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
-    $GLOBALS['output']='';
+    $GLOBALS['output'] = '';
     if ($result !== false) {
         while ($row = $result->fetch_array()) {
             $GLOBALS['isData'] = "1";
             $GLOBALS['output'] .= '<option value="' . $row['userId'] . '">' . $row['name'] . '</option>';
         }
-    }
-    else
-    {
+    } else {
         echo '<script type="text/javascript"> alert("' . $result . '");</script>';
     }
 }
@@ -117,7 +102,7 @@ function getData()
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <form name="attendence" action="add.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
+                    <form name="attendence" action="add.php" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 
 
                         <div class="row">
@@ -126,7 +111,7 @@ function getData()
                                     <div class="form-group">
                                         <label>Student Name</label>
                                         <select class="form-control" name="person" required="">
-                                            <?php echo $GLOBALS['output'];?>
+                                            <?php echo $GLOBALS['output']; ?>
 
                                         </select>
                                     </div>
@@ -137,7 +122,7 @@ function getData()
                                         <div class="input-group date" id='dp1'>
 
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i> </span>
-                                            <input type="text" placeholder="Attend Date" class="form-control datepicker" name="attendDate" required  data-date-format="dd/mm/yyyy">
+                                            <input type="text" placeholder="Attend Date" class="form-control datepicker" name="attendDate" required data-date-format="dd/mm/yyyy">
                                         </div>
                                     </div>
                                 </div>
@@ -146,16 +131,16 @@ function getData()
                                         <label>Is Absence</label>
                                         <select class="form-control" name="isabs" required="">
 
-                                        <option value="No">No</option>
-                                         <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
                                         </select>
                                     </div>
                                 </div>
-                                </div>
                             </div>
+                        </div>
 
-                                <div class="row">
-                                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Is Leave</label>
@@ -190,7 +175,7 @@ function getData()
                                 <div class="col-lg-5"></div>
                                 <div class="col-lg-2">
                                     <div class="form-group ">
-                                        <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
+                                        <button type="submit" class="btn btn-success" name="btnSave"><i class="fa fa-2x fa-check"></i>Save</button>
                                     </div>
 
                                 </div>
@@ -212,12 +197,9 @@ function getData()
 
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function() {
 
         $('.datepicker').datepicker();
 
     });
-
-
-
 </script>

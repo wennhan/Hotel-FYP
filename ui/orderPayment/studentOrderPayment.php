@@ -4,7 +4,7 @@
 <?php
 
 $GLOBALS['title'] = "Bill-HMS";
-$base_url = "http://localhost:8081/hms/";
+$base_url = "http://localhost/hms/";
 $GLOBALS['output'] = '';
 $GLOBALS['isData'] = "";
 
@@ -175,7 +175,7 @@ if ($loginGrp === "UG004") {
 
                     <div class="row">
                         <div class="col-lg-12 text-right">
-                            <form action="http://localhost:8081/hms/ui/meal/studentView.php" style="display: inline-block; margin-right: 10px;">
+                            <form action="http://localhost/hms/ui/meal/studentView.php" style="display: inline-block; margin-right: 10px;">
                                 <button type="submit" class="btn btn-primary">
                                     Back
                                 </button>
@@ -269,7 +269,7 @@ if ($loginGrp === "UG004") {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8081/hms/ui/meal/studentView.php",
+            url: "http://localhost/hms/ui/meal/studentView.php",
             data: {
                 serial: serial,
                 quantity: quantity,

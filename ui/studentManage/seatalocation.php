@@ -1,7 +1,7 @@
 <?php
 
-$GLOBALS['title']="Seat-HMS";
-$base_url="http://localhost:8081/hms/";
+$GLOBALS['title'] = "Seat-HMS";
+$base_url = "http://localhost/hms/";
 
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
@@ -9,15 +9,10 @@ require('./../../inc/dbPlayer.php');
 
 $ses = new \sessionManager\sessionManager();
 $ses->start();
-if($ses->isExpired())
-{
-    header( 'Location:'.$base_url.'login.php');
-
-
-}
-else
-{
-    $name=$ses->Get("loginId");
+if ($ses->isExpired()) {
+    header('Location:' . $base_url . 'login.php');
+} else {
+    $name = $ses->Get("loginId");
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -38,98 +33,77 @@ else
 
 
                 );
-                $result = $db->insertData("seataloc",$data);
+                $result = $db->insertData("seataloc", $data);
 
-                if($result>=0)
-                {
+                if ($result >= 0) {
 
                     echo '<script type="text/javascript"> alert("Seat Alocation Successfull.");</script>';
                     getData();
-                }
-                else
-                {
+                } else {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
-
-            }
-            else
-            {
+            } else {
                 echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
             }
         }
+    } else {
+
+
+
+        getData();
     }
-    else
-    {
-
-
-
-            getData();
-
-    }
-
-
 }
 function getData()
 {
-$msg="";
-$db = new \dbPlayer\dbPlayer();
-$msg = $db->open();
-if ($msg = "true") {
+    $msg = "";
+    $db = new \dbPlayer\dbPlayer();
+    $msg = $db->open();
+    if ($msg = "true") {
 
-    //load student list
-    $data = array();
-    $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
-    $GLOBALS['output'] = '';
-    if ($result !== false) {
-        while ($row = $result->fetch_array()) {
-            $GLOBALS['isData'] = "1";
-            $GLOBALS['output'] .= '<option value="' . $row['userId'] . '">' . $row['name'] . '</option>';
-
+        //load student list
+        $data = array();
+        $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
+        $GLOBALS['output'] = '';
+        if ($result !== false) {
+            while ($row = $result->fetch_array()) {
+                $GLOBALS['isData'] = "1";
+                $GLOBALS['output'] .= '<option value="' . $row['userId'] . '">' . $row['name'] . '</option>';
+            }
+        } else {
+            echo '<script type="text/javascript"> alert("' . $result . '");</script>';
         }
-
-
-    } else {
-        echo '<script type="text/javascript"> alert("' . $result . '");</script>';
-    }
-    $data = array();
-    $result = $db->getData("SELECT blockId,blockNo FROM blocks  where isActive='Y'");
-    $GLOBALS['output2'] = '';
-    if ($result !== false) {
-        while ($row = $result->fetch_array()) {
-            $GLOBALS['isData2'] = "1";
-            $GLOBALS['output2'] .= '<option value="' . $row['blockNo'] . '">' . $row['blockNo'] . '</option>';
-
+        $data = array();
+        $result = $db->getData("SELECT blockId,blockNo FROM blocks  where isActive='Y'");
+        $GLOBALS['output2'] = '';
+        if ($result !== false) {
+            while ($row = $result->fetch_array()) {
+                $GLOBALS['isData2'] = "1";
+                $GLOBALS['output2'] .= '<option value="' . $row['blockNo'] . '">' . $row['blockNo'] . '</option>';
+            }
+        } else {
+            echo '<script type="text/javascript"> alert("' . $result . '");</script>';
         }
-
-
-    } else {
-        echo '<script type="text/javascript"> alert("' . $result . '");</script>';
-    }
-    $data = array();
-    $result = $db->getData("SELECT roomId,roomNo FROM rooms  where isActive='Y'");
-    $GLOBALS['output3'] = '';
-    if ($result !== false) {
-        while ($row = $result->fetch_array()) {
-            $GLOBALS['isData3'] = "1";
-            $GLOBALS['output3'] .= '<option value="' . $row['roomNo'] . '">' . $row['roomNo'] . '</option>';
-
+        $data = array();
+        $result = $db->getData("SELECT roomId,roomNo FROM rooms  where isActive='Y'");
+        $GLOBALS['output3'] = '';
+        if ($result !== false) {
+            while ($row = $result->fetch_array()) {
+                $GLOBALS['isData3'] = "1";
+                $GLOBALS['output3'] .= '<option value="' . $row['roomNo'] . '">' . $row['roomNo'] . '</option>';
+            }
+        } else {
+            echo '<script type="text/javascript"> alert("' . $result . '");</script>';
         }
-
-
-    } else {
-        echo '<script type="text/javascript"> alert("' . $result . '");</script>';
     }
-
-}
     if ($msg = "true") {
 
         $data = array();
         $result = $db->getData("SELECT a.userId,b.name,a.blockNo,a.roomNo,a.monthlyRent from seataloc as a, studentinfo as b where a.userId = b.userId and b.isActive='Y'");
-        $GLOBALS['output1']='';
-        $GLOBALS['isData1']='';
+        $GLOBALS['output1'] = '';
+        $GLOBALS['isData1'] = '';
         if ($result !== false) {
 
-            $GLOBALS['output1'].='<div class="table-responsive">
+            $GLOBALS['output1'] .= '<div class="table-responsive">
                                 <table id="seatList" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -142,31 +116,25 @@ if ($msg = "true") {
                                     </thead>
                                     <tbody>';
             while ($row = $result->fetch_array()) {
-                $GLOBALS['isData1']="1";
+                $GLOBALS['isData1'] = "1";
                 $GLOBALS['output1'] .= "<tr>";
                 $GLOBALS['output1'] .= "<td>" . $row['name'] . "</td>";
                 $GLOBALS['output1'] .= "<td>" . $row['blockNo'] . "</td>";
                 $GLOBALS['output1'] .= "<td>" . $row['roomNo'] . "</td>";
                 $GLOBALS['output1'] .= "<td>" . $row['monthlyRent'] . "</td>";
-                $GLOBALS['output1'] .= "<td><a title='Edit' class='btn btn-success btn-circle' href='seatalaction.php?id=" . $row['userId'] ."&wtd=edit'"."><i class='fa fa-pencil'></i></a>&nbsp&nbsp<a title='Delete' class='btn btn-danger btn-circle' href='seatalaction.php?id=" . $row['userId'] ."&wtd=delete'"."><i class='fa fa-trash-o'></i></a></td>";
+                $GLOBALS['output1'] .= "<td><a title='Edit' class='btn btn-success btn-circle' href='seatalaction.php?id=" . $row['userId'] . "&wtd=edit'" . "><i class='fa fa-pencil'></i></a>&nbsp&nbsp<a title='Delete' class='btn btn-danger btn-circle' href='seatalaction.php?id=" . $row['userId'] . "&wtd=delete'" . "><i class='fa fa-trash-o'></i></a></td>";
                 $GLOBALS['output1'] .= "</tr>";
-
             }
 
-            $GLOBALS['output1'].=  '</tbody>
+            $GLOBALS['output1'] .=  '</tbody>
                                 </table>
                             </div>';
-
-
-        }
-        else
-        {
+        } else {
             echo '<script type="text/javascript"> alert("' . $result . '");</script>';
         }
     } else {
         echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
     }
-
 }
 
 ?>
@@ -189,7 +157,7 @@ if ($msg = "true") {
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form name="deposit" action="seatalocation.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
+                            <form name="deposit" action="seatalocation.php" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 
 
                                 <div class="row">
@@ -198,7 +166,7 @@ if ($msg = "true") {
                                             <div class="form-group">
                                                 <label>Student Name</label>
                                                 <select class="form-control" name="person" required="">
-                                                    <?php echo $GLOBALS['output'];?>
+                                                    <?php echo $GLOBALS['output']; ?>
 
                                                 </select>
                                             </div>
@@ -207,7 +175,7 @@ if ($msg = "true") {
                                             <div class="form-group">
                                                 <label>Block No</label>
                                                 <select class="form-control" name="blockNo" required="">
-                                                    <?php echo $GLOBALS['output2'];?>
+                                                    <?php echo $GLOBALS['output2']; ?>
 
                                                 </select>
                                             </div>
@@ -216,7 +184,7 @@ if ($msg = "true") {
                                             <div class="form-group">
                                                 <label>Room No</label>
                                                 <select class="form-control" name="roomNo" required="">
-                                                    <?php echo $GLOBALS['output3'];?>
+                                                    <?php echo $GLOBALS['output3']; ?>
 
                                                 </select>
                                             </div>
@@ -244,7 +212,7 @@ if ($msg = "true") {
                                         <div class="col-lg-5"></div>
                                         <div class="col-lg-2">
                                             <div class="form-group ">
-                                                <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
+                                                <button type="submit" class="btn btn-success" name="btnSave"><i class="fa fa-2x fa-check"></i>Save</button>
                                             </div>
 
                                         </div>
@@ -258,7 +226,9 @@ if ($msg = "true") {
                     <div class="row">
                         <div class="col-lg-12">
                             <hr />
-                            <?php if($GLOBALS['isData1']=="1"){echo $GLOBALS['output1'];}?>
+                            <?php if ($GLOBALS['isData1'] == "1") {
+                                echo $GLOBALS['output1'];
+                            } ?>
                         </div>
                     </div>
                 </div>
@@ -274,12 +244,9 @@ if ($msg = "true") {
 
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function() {
         $('#seatList').dataTable();
 
 
     });
-
-
-
 </script>
